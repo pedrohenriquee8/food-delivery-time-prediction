@@ -63,15 +63,14 @@ food-delivery-time-prediction/
 ├── data/
 │   └── raw/
 │       └── food-delivery-times.csv
+|── metrics/
+|   └── metrics.py
 |── models_saved/
 |   └── gradient_boosting_model.pkl
 |   └── linear_model.pkl
 |   └── random_forest_model.pkl
 |   └── xgboost_model.pkl
 |── src/
-|   └── evaluation/
-|       └── metrics/
-|           └── metrics.py
 |   └── features/
 |       └── feature_engineering.py
 |   └── models/
