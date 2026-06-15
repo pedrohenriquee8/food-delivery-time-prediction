@@ -63,6 +63,60 @@ food-delivery-time-prediction/
 ├── data/
 │   └── raw/
 │       └── food-delivery-times.csv
+|── models_saved/
+|   └── gradient_boosting_model.pkl
+|   └── linear_model.pkl
+|   └── random_forest_model.pkl
+|   └── xgboost_model.pkl
+|── src/
+|   └── evaluation/
+|       └── metrics/
+|           └── metrics.py
+|   └── features/
+|       └── feature_engineering.py
+|   └── models/
+|       └── train.py
+|   └── preprocessing/
+|       └── clear_data.py
+|       └── data_splitter.py
+|       └── eda.py
+|       └── pipeline_preprocess.py
 ├── .gitignore
-└── README.md
+├── main.py
+├── README.md
+└── requirements.txt
 ```
+## Execução
+
+### Pré‑requisitos
+
+- Python 3.10 ou superior
+- Git
+
+1. **Clone o repositório**
+
+   ```bash
+   git clone https://github.com/pedrohenriquee8/food-delivery-time-prediction.git
+   cd food-delivery-time-prediction
+
+2. **Crie e ative um ambiente virtual**
+
+    ```bash
+    # Linux / macOS
+    python -m venv venv
+    source venv/bin/activate
+
+    # Windows
+    python -m venv venv
+    venv\Scripts\activate
+    Instale as dependências
+
+3. **Instale as dependências necessárias**
+
+    ```bash
+    pip install -r requirements.txt
+
+4. **Execute o comando:**
+
+    ```bash
+    python main.py
