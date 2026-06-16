@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.impute import SimpleImputer
 
 def treat_missing_values(df):
@@ -16,7 +15,7 @@ def treat_missing_values(df):
         num_imputer = SimpleImputer(strategy='median')
         df[numeric_cols] = num_imputer.fit_transform(df[numeric_cols])
         
-        print(f"Valores ausentes preenchidos nas colunas numéricas: {numeric_cols}")
+        print(f"\nValores ausentes preenchidos nas colunas numéricas: {numeric_cols}")
     
     if categorical_cols:
         cat_imputer = SimpleImputer(strategy='most_frequent')
@@ -41,6 +40,6 @@ def remove_outliers_iqr(df, colunas, limite=1.5):
         
         df_sem_outliers = df_sem_outliers[(df_sem_outliers[col] >= inf) & (df_sem_outliers[col] <= sup)]
         
-    print(f"Removidos {df.shape[0] - df_sem_outliers.shape[0]} outliers.")
+    print(f"\nRemovidos {df.shape[0] - df_sem_outliers.shape[0]} outliers.")
     
     return df_sem_outliers

@@ -11,7 +11,7 @@ def calculate_metrics(y_true, y_pred):
     
     return {'MAE': mae, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
 
-def save_metrics(metricas_dict, arquivo='.src/evaluation/metrics/metricas.csv'):
+def save_metrics(metricas_dict, arquivo='./metrics/metricas.csv'):
     df = pd.DataFrame([metricas_dict])
     df.to_csv(arquivo, index=False)
     
@@ -30,5 +30,5 @@ def plot_importances(modelo_pipeline, feature_names, top_n=20):
         plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
         plt.gca().invert_yaxis()
         plt.tight_layout()
-        plt.savefig('./src/evaluation/metrics/importancias_features.png')
+        plt.savefig('./metrics/importancias_features.png')
         plt.show()

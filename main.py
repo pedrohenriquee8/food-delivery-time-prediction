@@ -1,13 +1,13 @@
 import sys
 sys.path.append('.') 
 
-from src.preprocessing.eda import load_data
+from src.preprocessing.eda import load_data, descriptive_statistics, plot_distribution_target, correlations
 from src.preprocessing.clear_data import treat_missing_values, remove_outliers_iqr
 from src.features.feature_engineering import create_interactions, create_peak_hours, map_ordinal_traffic
 from src.preprocessing.data_splitter import separate_training_test
 from src.preprocessing.pipeline_preprocess import create_preprocessor
 from src.models.train import train_model
-from src.evaluation.metrics import calculate_metrics, save_metrics, plot_importances
+from metrics.metrics import calculate_metrics, save_metrics, plot_importances
 
 import pandas as pd
 import joblib
@@ -21,6 +21,12 @@ def main():
     df = create_peak_hours(df)
     df = create_interactions(df)
     
+    # Estatísticas descritivas
+    descriptive_statistics(df)
+    plot_distribution_target(df, target_col='Delivery_Time_min')
+    correlations(df, target_col='Delivery_Time_min')
+    
+    # Utilizou-se o método do IQR (Intervalo Interquartil) com limite de 1,5 para identificar outliers em cada variável numérica
     df = remove_outliers_iqr(df, ['Delivery_Time_min'], limite=1.5)
     
     target = 'Delivery_Time_min'
@@ -59,7 +65,7 @@ def main():
         metricas = calculate_metrics(y_test, y_pred)
         results[name] = metricas
         
-        save_metrics(metricas, f'./src/evaluation/metrics/metricas_{name}.csv')
+        save_metrics(metricas, f'./metrics/metricas_{name}.csv')
         joblib.dump(pipeline, f'./models_saved/{name}_model.pkl')
         
         if name in ['random_forest', 'gradient_boosting']:
@@ -73,7 +79,7 @@ def main():
     print("\n=== Comparação de Modelos ===")
     
     print(df_resultados)
-    df_resultados.to_csv('./src/evaluation/metrics/comparacao_modelos.csv')
+    df_resultados.to_csv('./metrics/comparacao_modelos.csv')
 
 if __name__ == '__main__':
     main()
