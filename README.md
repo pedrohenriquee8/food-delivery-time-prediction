@@ -79,24 +79,34 @@ food-delivery-time-prediction/
 ├── data/
 │   └── raw/
 │       └── food-delivery-times.csv
-|── metrics/
-|   └── metrics.py
-|── models_saved/
-|   └── gradient_boosting_model.pkl
-|   └── linear_model.pkl
-|   └── random_forest_model.pkl
-|── src/
-|   └── features/
-|       └── feature_engineering.py
-|   └── models/
-|       └── train.py
-|   └── preprocessing/
-|       └── clear_data.py
-|       └── data_splitter.py
-|       └── eda.py
-|       └── pipeline_preprocess.py
+├── metrics/
+│   └── metrics.py
+├── models_saved/
+│   └── gradient_boosting_model.pkl
+│   └── linear_model.pkl
+│   └── random_forest_model.pkl
+├── src/
+│   ├── ingestion/
+│   │   └── load_data.py
+│   ├── utils/
+│   │   ├── constants.py
+│   │   ├── exceptions.py
+│   │   └── validators.py
+│   ├── features/
+│   │   └── feature_engineering.py
+│   ├── models/
+│   │   └── train.py
+│   └── preprocessing/
+│       ├── clear_data.py
+│       ├── data_splitter.py
+│       ├── eda.py
+│       └── pipeline_preprocess.py
+├── tests/
+│   ├── conftest.py
+│   └── test_*.py
 ├── .gitignore
 ├── main.py
+├── pytest.ini
 ├── README.md
 └── requirements.txt
 ```
@@ -129,10 +139,26 @@ food-delivery-time-prediction/
     ```bash
     pip install -r requirements.txt
 
-4. **Execute o comando:**
+4. **Execute o pipeline:**
 
     ```bash
     python main.py
+    ```
+
+5. **Execute os testes unitários**
+
+    ```bash
+    # Executar todos os testes
+    pytest
+
+    # Executar com saída detalhada
+    pytest -v
+
+    # Executar um arquivo específico
+    pytest tests/test_validators.py
+
+    # Executar um teste específico
+    pytest tests/test_load_data.py::test_load_data_remove_order_id
 
 ## Escolhas de implementação
 
@@ -151,6 +177,7 @@ food-delivery-time-prediction/
 | `scikit-learn`            | Oferecer os algoritmos de regressão (Linear Regression, Random Forest, Gradient Boosting), pré‑processamento (StandardScaler, OneHotEncoder, SimpleImputer), divisão em treino‑teste, métricas de avaliação (MAE, MSE, R²) e pipelines                   |
 | `joblib`           | Salvar e carregar os modelos treinados    |
 | `seaborn`           | Visualizações estatísticas  |
+| `pytest`           | Executar testes unitários e validar o comportamento dos módulos  |
 
 3. **Método de separação**
 
