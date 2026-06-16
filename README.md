@@ -119,7 +119,7 @@ food-delivery-time-prediction/
     ```bash
     python main.py
 
-## Bibliotecas e tecnologias utilizadas
+## Escolhas de implementação
 
 1. **Python**
     ```bash
@@ -135,6 +135,10 @@ food-delivery-time-prediction/
 | `scikit-learn`            | Oferecer os algoritmos de regressão (Linear Regression, Random Forest, Gradient Boosting), pré‑processamento (StandardScaler, OneHotEncoder, SimpleImputer), divisão em treino‑teste, métricas de avaliação (MAE, MSE, R²) e pipelines                   |
 | `joblib`           | Salvar e carregar os modelos treinados    |
 | `seaborn`           | Visualizações estatísticas  |
+
+3. **Método de separação**
+
+Para a realização deste projeto. utilizou-se o método **hold-out**, com divisão 80% para treino e 20% para teste. Essa escolha se justifica devido ao dataset possuir tamanho moderado (994 amostras), permitindo uma partição representativa sem comprometer a quantidade de dados para treinamento. Além disso, o conjunto de teste (cerca de 200 amostras) é suficientemente grande para avaliar as métricas com confiança.
 
 ## Resultados obtidos
 
