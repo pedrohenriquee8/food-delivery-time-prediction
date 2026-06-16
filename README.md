@@ -197,9 +197,25 @@ Com base nisso, realizamos a comparação entre três modelos de regressão (Lin
 | `random_forest`            | 6.45| 92.93| 9.64| 0.81
 | `gradient_boosting`    |6.06|89.38|9.45 |0.81
 
-O modelo **Linear Regression** teve os melhores resultados, se saindo melhor em todas as métricas de MAE, MSE, RMSE e R2 em relação aos outros modelos.
+Embora **Random Forest** e **Gradient Boosting** sejam modelos mais complexos, a **Regressão Linear** apresentou as melhores métricas (menor MAE/RMSE e maior R²). Isso pode se justificar:
 
-### Matriz de correlação
+* As principais variáveis preditoras (Distance_km e Dist_x_Traffic) apresentam forte correlação linear com a variável alvo (r > 0,70).
+
+* A engenharia de features já introduziu a interação mais relevante (Dist_x_Traffic), reduzindo a vantagem das árvores em descobrir interações automaticamente.
+
+* O dataset tem tamanho moderado (~1000 amostras), e modelos complexos como Random Forest e Gradient Boosting, com parâmetros padrão, estão sujeitos a overfitting.
+
+* A análise de importância das features mostrou que a maioria das variáveis tem contribuição marginal (≤ 3%), o que torna a simplicidade da Regressão Linear uma vantagem.
+
+Portanto, **para este problema** e com os dados disponíveis, **a Regressão Linear é o modelo mais adequado**, combinando boa capacidade preditiva com maior simplicidade e interpretabilidade.
+
+### Histograma
+
+A análise da distribuição da variável alvo (`Delivery_Time_min`) revelou que o tempo de entrega varia de 8 a 153 minutos, com média de ~55 min e mediana de ~50 min (aproximadamente), indicando assimetria à direita. Essa calda longa indica a presença de outliers, essa distribuição sugere a necessidade de modelos robustos a outliers (como Random Forest e Gradient Boosting) e justifica a remoção controlada de outliers via IQR somente na variável alvo.
+
+![](/home/mabellemos/Downloads/estatistica_descritiva.png)
+
+### * Matriz de correlação
 
 Com base na matriz de correlação (coeficiente de correlação de Person), pode-se observar que as duas variáveis que possuem **correlações maiores** (isto é, quando uma aumenta a outra também aumenta) são as variáveis `Distance_km` e `Dist_x_Traffic`, com valores de 0.78 e 0.70, respectivamente. Isso demostra que quanto maior a distância de entrega, maior é o tempo mínimo para realizar a entrega, além disso, o trânsico também faz com o que esse tempo aumente. 
 
@@ -207,4 +223,8 @@ As variáveis que representam **correlações menores** são as `Preparation_Tim
 
 ![](metrics/correlacao_heatmap.png)
 
-### 
+### * Análise da importância das features
+
+Uma análise da importância das features geradas é importante para modelos baseados em árvores (Random Forest e Gradient Boosting), pois revela quais variáveis o modelo considera mais relevantes para fazer suas previsões. Sendo assim, colabora para avaliar se as features geradas agregam realmente valor. As features mais revelantes são **`Distance_km`** e **`Dist_x_Traffic`** demonstrando serem fatores determinantes para o valor da entrega.
+
+![](metrics/importancias_features.png)

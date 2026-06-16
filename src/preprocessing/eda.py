@@ -31,6 +31,7 @@ def plot_distribution_target(df, target_col):
     validate_column_exists(df, target_col)
 
     sns.histplot(df[target_col], kde=True)
+    plt.savefig('./metrics/histograma.png')
     plt.show()
 
 def correlations(df, target_col):
@@ -64,6 +65,7 @@ def correlations(df, target_col):
     ensure_directory('./metrics/correlacao_heatmap.png')
     
     plt.savefig('./metrics/correlacao_heatmap.png', bbox_inches='tight')
+    plt.show()
     plt.close()
 
     print("\nCorrelação com a variável alvo:\n")
