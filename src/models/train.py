@@ -3,7 +3,14 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.pipeline import Pipeline
 
 def train_model(preprocessor, modelo_nome, X_train, y_train):
-    ''' Treina o modelo de regressão a partir do conjunto de treino utilizando um pré-processador '''
+    ''' Treina o modelo de regressão a partir do conjunto de treino utilizando um pré-processador 
+    
+        :param preprocessor: Pipeline de pré-processamento dos dados
+        :param modelo_nome: Nome do modelo a ser treinado ('linear', 'random_forest', 'gradient_boosting')
+        :param X_train: Conjunto de treino (features)
+        :param y_train: Conjunto de treino (target)
+        :return: Pipeline com o modelo treinado
+    '''
     
     modelos = {
         'linear': LinearRegression(),

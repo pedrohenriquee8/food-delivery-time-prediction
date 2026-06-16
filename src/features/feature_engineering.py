@@ -1,5 +1,9 @@
 def map_ordinal_traffic(df):
-    ''' Converte a variável categórica Traffic_Level em uma variável numérica '''
+    ''' Converte a variável categórica Traffic_Level em uma variável numérica 
+    
+        :param df: DataFrame contendo a coluna Traffic_Level
+        :return: DataFrame com a nova coluna Traffic_Level_ord
+    '''
     
     mapa = {'Low': 1, 'Medium': 2, 'High': 3}
     df['Traffic_Level_ord'] = df['Traffic_Level'].map(mapa)
@@ -7,7 +11,11 @@ def map_ordinal_traffic(df):
     return df
 
 def create_peak_hours(df):
-    ''' Cria uma variável Horario_Pico que faz o modelo entender que horários de maior demanda as entregas demoram mais '''
+    ''' Cria uma variável Horario_Pico que faz o modelo entender que horários de maior demanda as entregas podem demorar mais 
+    
+        :param df: DataFrame contendo a coluna Time_of_Day
+        :return: DataFrame com a nova coluna Horario_Pico
+    '''
     
     pico = {'Morning': 0, 'Afternoon': 1, 'Evening': 1, 'Night': 0}
     df['Horario_Pico'] = df['Time_of_Day'].map(pico)
@@ -15,7 +23,11 @@ def create_peak_hours(df):
     return df
 
 def create_interactions(df):
-    ''' Combina variáveis independentes para capturar efeitos conjuntos que podem impactar na entrega '''
+    ''' Combina variáveis independentes para capturar efeitos conjuntos que podem impactar na entrega 
+    
+        :param df: DataFrame contendo as colunas necessárias para criar as interações
+        :return: DataFrame com as novas colunas de interações
+    '''
     
     if 'Distance_km' in df.columns and 'Traffic_Level_ord' in df.columns:
         df['Dist_x_Traffic'] = df['Distance_km'] * df['Traffic_Level_ord']

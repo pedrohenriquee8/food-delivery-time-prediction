@@ -4,6 +4,9 @@ from sklearn.impute import SimpleImputer
 def treat_missing_values(df):
     ''' Imputa valores ausentes (numéricas: mediana, categóricas: moda) e 
     cria features: Traffic_Level_ord, Horario_Pico, Dist_x_Traffic, Prep_x_Pico
+    
+        :param df: DataFrame a ser tratado
+        :return: DataFrame com valores ausentes tratados
     '''
     df = df.copy()
     
@@ -28,7 +31,14 @@ def treat_missing_values(df):
     return df
 
 def remove_outliers_iqr(df, colunas, limite=1.5):
-    ''' Remove linhas de um DataFrame que contenham outliers '''
+    ''' Remove linhas de um DataFrame que contenham outliers 
+    com base no método do IQR (Interquartile Range).
+    
+        :param df: DataFrame a ser tratado
+        :param colunas: Lista de colunas numéricas para verificar outliers
+        :param limite: Multiplicador do IQR para definir os limites (padrão: 1.5)
+        :return: DataFrame sem os outliers
+    '''
     df_sem_outliers = df.copy()
     
     for col in colunas:

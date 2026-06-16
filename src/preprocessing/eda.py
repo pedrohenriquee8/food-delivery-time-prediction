@@ -4,7 +4,11 @@ import seaborn as sns
 import numpy as np
 
 def load_data(caminho_raw):
-    ''' Carrega o dataset e remove a coluna Order_ID '''
+    ''' Carrega o dataset e remove a coluna Order_ID 
+    
+        :param caminho_raw: caminho do arquivo CSV contendo os dados brutos
+        :return: DataFrame do pandas contendo os dados carregados e pré-processados
+    '''
     
     df = pd.read_csv(caminho_raw)
     
@@ -15,19 +19,30 @@ def load_data(caminho_raw):
     return df
 
 def descriptive_statistics(df):
-    ''' Demostra as estatísticas descritivas '''
+    ''' Demostra as estatísticas descritivas 
+    
+        :param df: DataFrame do pandas contendo os dados carregados e pré-processados
+    '''
     
     print(df.describe())
     print(df.info())
 
 def plot_distribution_target(df, target_col):
-    ''' Distribuição de variáveis '''
+    ''' Distribuição de variáveis 
+            
+        :param df: DataFrame do pandas contendo os dados carregados e pré-processados
+        :param target_col: nome da coluna alvo para análise de distribuição
+    '''
     
     sns.histplot(df[target_col], kde=True)
     plt.show()
 
 def correlations(df, target_col):
-    ''' Analisa e visualiza a correlação linear entre as variáveis numéricas do dataset '''
+    ''' Analisa e visualiza a correlação linear entre as variáveis numéricas do dataset 
+    
+        :param df: DataFrame do pandas contendo os dados carregados e pré-processados
+        :param target_col: nome da coluna alvo para análise de correlação
+    '''
     
     numeric_df = df.select_dtypes(include=np.number)
     corr = numeric_df.corr()

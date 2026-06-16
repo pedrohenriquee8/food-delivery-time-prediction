@@ -4,7 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def calculate_metrics(y_true, y_pred):
-    ''' Calcula métrica MAE, MSE, RMSE E R2 para avaliação '''
+    ''' Calcula métrica MAE, MSE, RMSE e R2 para avaliação 
+    
+        :param y_true: valor real da variável alvo
+        :param y_pred:  valor predito da variável alvo
+        :return: dicionário com as métricas calculadas
+    '''
     
     mae = mean_absolute_error(y_true, y_pred)
     mse = mean_squared_error(y_true, y_pred)
@@ -14,7 +19,11 @@ def calculate_metrics(y_true, y_pred):
     return {'MAE': mae, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
 
 def save_metrics(metricas_dict, arquivo='./metrics/metricas.csv'):
-    ''' Salva as métricas '''
+    ''' Salva as métricas 
+    
+        :param metricas_dict: dicionário com as métricas calculadas
+        :param arquivo: caminho do arquivo onde as métricas serão salvas
+    '''
     
     df = pd.DataFrame([metricas_dict])
     df.to_csv(arquivo, index=False)
@@ -22,7 +31,12 @@ def save_metrics(metricas_dict, arquivo='./metrics/metricas.csv'):
     print(f"Métricas salvas em {arquivo}")
 
 def plot_importances(modelo_pipeline, feature_names, top_n=20):
-    ''' Avalia a importância das variáveis para os modelos Random Forest e Gradient Boosting '''
+    ''' Avalia a importância das variáveis para os modelos Random Forest e Gradient Boosting 
+    
+        :param modelo_pipeline: pipeline do modelo treinado
+        :param feature_names: lista com os nomes das features utilizadas no modelo
+        :param top_n: número de features mais importantes a serem exibidas
+    '''
     
     regressor = modelo_pipeline.named_steps['regressor']
     
