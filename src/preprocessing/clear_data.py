@@ -2,10 +2,9 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 
 def treat_missing_values(df):
-    """
-    Imputa valores ausentes (numéricas: mediana, categóricas: moda)
-    Cria features: Traffic_Level_ord, Horario_Pico, Dist_x_Traffic, Prep_x_Pico
-    """
+    ''' Imputa valores ausentes (numéricas: mediana, categóricas: moda) e 
+    cria features: Traffic_Level_ord, Horario_Pico, Dist_x_Traffic, Prep_x_Pico
+    '''
     df = df.copy()
     
     numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns.tolist()
@@ -29,6 +28,7 @@ def treat_missing_values(df):
     return df
 
 def remove_outliers_iqr(df, colunas, limite=1.5):
+    ''' Remove linhas de um DataFrame que contenham outliers '''
     df_sem_outliers = df.copy()
     
     for col in colunas:

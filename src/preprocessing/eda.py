@@ -4,6 +4,8 @@ import seaborn as sns
 import numpy as np
 
 def load_data(caminho_raw):
+    ''' Carrega o dataset e remove a coluna Order_ID '''
+    
     df = pd.read_csv(caminho_raw)
     
     if 'Order_ID' in df.columns:
@@ -13,16 +15,20 @@ def load_data(caminho_raw):
     return df
 
 def descriptive_statistics(df):
-    # Estatísticas descritivas
+    ''' Demostra as estatísticas descritivas '''
+    
     print(df.describe())
     print(df.info())
 
 def plot_distribution_target(df, target_col):
+    ''' Distribuição de variáveis '''
+    
     sns.histplot(df[target_col], kde=True)
     plt.show()
 
-# Matriz de correlação de Pearson
 def correlations(df, target_col):
+    ''' Analisa e visualiza a correlação linear entre as variáveis numéricas do dataset '''
+    
     numeric_df = df.select_dtypes(include=np.number)
     corr = numeric_df.corr()
     

@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 
 def create_preprocessor(numericas, categoricas):
-    """Aplica StandardScaler nas numéricas e OneHotEncoder nas categóricas."""
+    ''' Controí um pré-processador automático aplicando StandardScaler nas numéricas e OneHotEncoder nas categóricas '''
     
     num_transformer = Pipeline([('scaler', StandardScaler())])
     cat_transformer = Pipeline([('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])

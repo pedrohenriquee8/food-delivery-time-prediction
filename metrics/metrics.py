@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def calculate_metrics(y_true, y_pred):
+    ''' Calcula métrica MAE, MSE, RMSE E R2 para avaliação '''
+    
     mae = mean_absolute_error(y_true, y_pred)
     mse = mean_squared_error(y_true, y_pred)
     rmse = np.sqrt(mse)
@@ -12,12 +14,16 @@ def calculate_metrics(y_true, y_pred):
     return {'MAE': mae, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
 
 def save_metrics(metricas_dict, arquivo='./metrics/metricas.csv'):
+    ''' Salva as métricas '''
+    
     df = pd.DataFrame([metricas_dict])
     df.to_csv(arquivo, index=False)
     
     print(f"Métricas salvas em {arquivo}")
 
 def plot_importances(modelo_pipeline, feature_names, top_n=20):
+    ''' Avalia a importância das variáveis para os modelos Random Forest e Gradient Boosting '''
+    
     regressor = modelo_pipeline.named_steps['regressor']
     
     if hasattr(regressor, 'feature_importances_'):
