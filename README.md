@@ -213,7 +213,7 @@ Portanto, **para este problema** e com os dados disponíveis, **a Regressão Lin
 
 A análise da distribuição da variável alvo (`Delivery_Time_min`) revelou que o tempo de entrega varia de 8 a 153 minutos, com média de ~55 min e mediana de ~50 min (aproximadamente), indicando assimetria à direita. Essa calda longa indica a presença de outliers, essa distribuição sugere a necessidade de modelos robustos a outliers (como Random Forest e Gradient Boosting) e justifica a remoção controlada de outliers via IQR somente na variável alvo.
 
-![](/home/mabellemos/Documentos/projects/web/food-delivery-time-prediction/metrics/histograma.png)
+![](metrics/histograma.png)
 
 ### * Matriz de correlação
 
