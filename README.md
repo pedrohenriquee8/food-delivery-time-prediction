@@ -209,11 +209,11 @@ Embora **Random Forest** e **Gradient Boosting** sejam modelos mais complexos, a
 
 Portanto, **para este problema** e com os dados disponíveis, **a Regressão Linear é o modelo mais adequado**, combinando boa capacidade preditiva com maior simplicidade e interpretabilidade.
 
-### Histograma
+### * Histograma
 
 A análise da distribuição da variável alvo (`Delivery_Time_min`) revelou que o tempo de entrega varia de 8 a 153 minutos, com média de ~55 min e mediana de ~50 min (aproximadamente), indicando assimetria à direita. Essa calda longa indica a presença de outliers, essa distribuição sugere a necessidade de modelos robustos a outliers (como Random Forest e Gradient Boosting) e justifica a remoção controlada de outliers via IQR somente na variável alvo.
 
-![](/home/mabellemos/Downloads/estatistica_descritiva.png)
+![](/home/mabellemos/Documentos/projects/web/food-delivery-time-prediction/metrics/histograma.png)
 
 ### * Matriz de correlação
 
