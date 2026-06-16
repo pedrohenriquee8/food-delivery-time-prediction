@@ -171,3 +171,13 @@ Com base nisso, realizamos a comparação entre três modelos de regressão (Lin
 | `gradient_boosting`    |6.06|89.38|9.45 |0.81
 
 O modelo **Linear Regression** teve os melhores resultados, se saindo melhor em todas as métricas de MAE, MSE, RMSE e R2 em relação aos outros modelos.
+
+### Matriz de correlação
+
+Com base na matriz de correlação (coeficiente de correlação de Person), pode-se observar que as duas variáveis que possuem **correlações maiores** (isto é, quando uma aumenta a outra também aumenta) são as variáveis `Distance_km` e `Dist_x_Traffic`, com valores de 0.78 e 0.70, respectivamente. Isso demostra que quanto maior a distância de entrega, maior é o tempo mínimo para realizar a entrega, além disso, o trânsico também faz com o que esse tempo aumente. 
+
+As variáveis que representam **correlações menores** são as `Preparation_Time_min`, `Prep_x_Pico`, `Traffic_Level_ord`, que não influenciam tão fortemente no tempo final de entrega. Além disso, a variável `Horario_Pico` demostrou que **não** possue relação linear **(0.00)** e `Courier_Experience_yrs` que possue **correlação negativa**.
+
+![](metrics/correlacao_heatmap.png)
+
+### 
