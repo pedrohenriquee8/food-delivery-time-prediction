@@ -7,7 +7,6 @@ def train_model(preprocessor, modelo_nome, X_train, y_train):
         'linear': LinearRegression(),
         'random_forest': RandomForestRegressor(n_estimators=100, random_state=42),
         'gradient_boosting': GradientBoostingRegressor(random_state=42),
-        'xgboost': GradientBoostingRegressor(random_state=42)
     }
     
     modelo = modelos.get(modelo_nome)

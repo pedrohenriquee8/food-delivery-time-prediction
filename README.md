@@ -69,7 +69,6 @@ food-delivery-time-prediction/
 |   └── gradient_boosting_model.pkl
 |   └── linear_model.pkl
 |   └── random_forest_model.pkl
-|   └── xgboost_model.pkl
 |── src/
 |   └── features/
 |       └── feature_engineering.py
@@ -119,3 +118,31 @@ food-delivery-time-prediction/
 
     ```bash
     python main.py
+
+## Bibliotecas e tecnologias utilizadas
+
+1. **Python**
+    ```bash
+    Python 3.12.3
+
+2. **Bibliotecas**
+
+| Biblioteca                   | Uso                        |
+| ------------------------ | -------------------------------- |
+| `pandas`               | Carregar, manipular e limpar o dataset de pedidos          |
+| `numpy`            | Fornecer operações matemáticas e arrays multidimensionais   |
+| `matplotlib`                | Gerar gráficos estáticos               |
+| `scikit-learn`            | Oferecer os algoritmos de regressão (Linear Regression, Random Forest, Gradient Boosting), pré‑processamento (StandardScaler, OneHotEncoder, SimpleImputer), divisão em treino‑teste, métricas de avaliação (MAE, MSE, R²) e pipelines                   |
+| `joblib`           | Salvar e carregar os modelos treinados    |
+
+## Resultados obtidos
+
+Com base nisso, realizamos a comparação entre três modelos de regressão (Linear Regression, Random Forest e Gradient Boosting)
+
+| Modelo                  | MAE                       | MSE | RMSE | R2
+| ------------------------ | -------------------------------- |  -------------------------------- | -------------------------------- | -------------------------------- |
+| `linear`               | **5.58** | **73.80** | **8.60** | **0.85**
+| `random_forest`            | 6.45| 92.93| 9.64| 0.81
+| `gradient_boosting`    |6.06|89.38|9.45 |0.81
+
+O modelo **Linear Regression** teve os melhores resultados, se saindo melhor em todas as métricas de MAE, MSE, RMSE e R2 em relação aos outros modelos.

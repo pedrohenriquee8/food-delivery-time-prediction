@@ -48,7 +48,7 @@ def main():
     
     preprocessor = create_preprocessor(numeric_cols, categorical_cols)
     
-    models = ['linear', 'random_forest', 'gradient_boosting', 'xgboost']
+    models = ['linear', 'random_forest', 'gradient_boosting']
     results = {}
     
     for name in models:
@@ -62,7 +62,7 @@ def main():
         save_metrics(metricas, f'./src/evaluation/metrics/metricas_{name}.csv')
         joblib.dump(pipeline, f'./models_saved/{name}_model.pkl')
         
-        if name in ['random_forest', 'gradient_boosting', 'xgboost']:
+        if name in ['random_forest', 'gradient_boosting']:
             pipeline.fit(X_train, y_train)  # já foi fit, mas garantia
             transformed_cols = pipeline.named_steps['preprocessor'].get_feature_names_out()
             plot_importances(pipeline, transformed_cols)
