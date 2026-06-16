@@ -122,8 +122,7 @@ food-delivery-time-prediction/
 
     # Windows
     python -m venv venv
-    venv\Scripts\activate
-    Instale as dependências
+    source venv/Scripts/activate
 
 3. **Instale as dependências necessárias**
 
@@ -138,6 +137,7 @@ food-delivery-time-prediction/
 ## Escolhas de implementação
 
 1. **Python**
+
     ```bash
     Python 3.12.3
 
