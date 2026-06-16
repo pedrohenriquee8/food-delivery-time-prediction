@@ -134,6 +134,7 @@ food-delivery-time-prediction/
 | `matplotlib`                | Gerar gráficos estáticos               |
 | `scikit-learn`            | Oferecer os algoritmos de regressão (Linear Regression, Random Forest, Gradient Boosting), pré‑processamento (StandardScaler, OneHotEncoder, SimpleImputer), divisão em treino‑teste, métricas de avaliação (MAE, MSE, R²) e pipelines                   |
 | `joblib`           | Salvar e carregar os modelos treinados    |
+| `seaborn`           | Visualizações estatísticas  |
 
 ## Resultados obtidos
 

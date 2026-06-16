@@ -2,5 +2,6 @@ pandas
 numpy
 matplotlib
 scikit-learn
+seaborn
 joblib
 pytest
