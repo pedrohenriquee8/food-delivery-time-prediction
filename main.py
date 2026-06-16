@@ -69,7 +69,7 @@ def main():
         joblib.dump(pipeline, f'./models_saved/{name}_model.pkl')
         
         if name in ['random_forest', 'gradient_boosting']:
-            pipeline.fit(X_train, y_train)  # já foi fit, mas garantia
+            pipeline.fit(X_train, y_train) 
             transformed_cols = pipeline.named_steps['preprocessor'].get_feature_names_out()
             plot_importances(pipeline, transformed_cols)
     
