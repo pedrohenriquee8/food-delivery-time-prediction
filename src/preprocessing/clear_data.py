@@ -10,7 +10,6 @@ from src.utils.validators import (
     validate_no_nulls,
 )
 
-
 def treat_missing_values(df):
     ''' Imputa valores ausentes (numéricas: mediana, categóricas: moda) e 
         cria features: Traffic_Level_ord, Horario_Pico, Dist_x_Traffic, Prep_x_Pico

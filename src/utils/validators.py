@@ -4,7 +4,6 @@ import pandas as pd
 
 from src.utils.exceptions import DataLoadError, DataValidationError
 
-
 def validate_file_exists(path):
     """
     Verifica se o arquivo existe no caminho informado.
@@ -14,7 +13,6 @@ def validate_file_exists(path):
     """
     if not os.path.isfile(path):
         raise DataLoadError(f"Arquivo não encontrado: '{path}'")
-
 
 def validate_dataframe_not_empty(df, context='DataFrame'):
     """
@@ -26,7 +24,6 @@ def validate_dataframe_not_empty(df, context='DataFrame'):
     """
     if df is None or len(df) == 0:
         raise DataValidationError(f"{context} está vazio.")
-
 
 def validate_required_columns(df, columns):
     """
@@ -40,7 +37,6 @@ def validate_required_columns(df, columns):
     if missing:
         raise DataValidationError(f"Colunas ausentes: {missing}")
 
-
 def validate_column_exists(df, column):
     """
     Verifica se uma coluna específica existe no DataFrame.
@@ -51,7 +47,6 @@ def validate_column_exists(df, column):
     """
     if column not in df.columns:
         raise DataValidationError(f"Coluna '{column}' não encontrada no DataFrame.")
-
 
 def validate_no_nulls(df, columns):
     """
@@ -64,7 +59,6 @@ def validate_no_nulls(df, columns):
     null_cols = [col for col in columns if col in df.columns and df[col].isnull().any()]
     if null_cols:
         raise DataValidationError(f"Valores nulos detectados nas colunas: {null_cols}")
-
 
 def validate_categorical_values(series, allowed_values, column_name):
     """
@@ -82,7 +76,6 @@ def validate_categorical_values(series, allowed_values, column_name):
             f"Valores esperados: {sorted(allowed_values)}"
         )
 
-
 def validate_same_length(a, b, name_a='a', name_b='b'):
     """
     Verifica se dois objetos possuem o mesmo tamanho.
@@ -98,7 +91,6 @@ def validate_same_length(a, b, name_a='a', name_b='b'):
             f"Tamanhos incompatíveis: {name_a}={len(a)}, {name_b}={len(b)}"
         )
 
-
 def validate_test_size(test_size):
     """
     Verifica se test_size está no intervalo (0, 1).
@@ -110,7 +102,6 @@ def validate_test_size(test_size):
         raise DataValidationError(
             f"test_size deve estar entre 0 e 1 (exclusivo), recebido: {test_size}"
         )
-
 
 def validate_no_column_overlap(numeric_cols, categorical_cols):
     """
@@ -125,7 +116,6 @@ def validate_no_column_overlap(numeric_cols, categorical_cols):
         raise DataValidationError(
             f"Colunas presentes em numéricas e categóricas: {sorted(overlap)}"
         )
-
 
 def ensure_directory(path):
     """

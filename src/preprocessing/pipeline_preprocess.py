@@ -5,7 +5,6 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from src.utils.exceptions import PreprocessingError
 from src.utils.validators import validate_no_column_overlap
 
-
 def create_preprocessor(numericas, categoricas):
     ''' Controí um pré-processador automático aplicando StandardScaler nas numéricas e OneHotEncoder nas categóricas 
     
