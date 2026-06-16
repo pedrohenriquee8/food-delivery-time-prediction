@@ -56,6 +56,22 @@ O dataset original está em `data/raw/food-delivery-times.csv`, sem alterações
 | `Courier_Experience_yrs` | Experiência do entregador (anos) |
 | `Delivery_Time_min`      | Tempo total de entrega (min)     |
 
+### Tipo de Dados
+
+O dataset contém dois tipos de dados principais: valores numéricos (int e float) e strings categóricas (rótulos) 
+
+| Coluna                   | Tipo                        | Exemplo | Observação |
+| ------------------------ | -------------------------------- | -------------------------------- | -------------------------------- | 
+| `Order_ID`               | Inteiro (int)| 987 | A coluna `Order_ID` foi removida do treinamento, pois não é uma feature significativa (representa apenas o ID do pedido)
+| `Distance_km`            | Ponto flutuante (float) | 13.92 |
+| `Weather`                | String categórica (Snowy, Windy, Clear, Rainy, Foggy) | Snowy |
+| `Traffic_Level`          | String categórica (High, Medium, Low) | High |
+| `Time_of_Day`            | String categórica (Evening, Night, Afternoon, Morning) | Morning |
+| `Vehicle_Type`           | String categórica (Bike, Scooter, Car) | Car |
+| `Preparation_Time_min`   | Inteiro (int) | 14 |
+| `Courier_Experience_yrs` | Ponto flutuante (float) | 7.0 |
+| `Delivery_Time_min`      | Inteiro (int) | 88 | 
+
 ## Estrutura atual do projeto
 
 ```text
@@ -139,6 +155,10 @@ food-delivery-time-prediction/
 3. **Método de separação**
 
 Para a realização deste projeto. utilizou-se o método **hold-out**, com divisão 80% para treino e 20% para teste. Essa escolha se justifica devido ao dataset possuir tamanho moderado (994 amostras), permitindo uma partição representativa sem comprometer a quantidade de dados para treinamento. Além disso, o conjunto de teste (cerca de 200 amostras) é suficientemente grande para avaliar as métricas com confiança.
+
+4. **Preenchimento de dados ausentes**
+
+Para preencher os dados ausentes no dataset do projeto os valores numéricos foram substituídos pela mediana, enquanto os valores categóricos foram substituídos pelos valores da moda. A decisão de não deleção das linhas com dados faltantes deu-se pela quantidade significativa de linhas com dados ausentes.
 
 ## Resultados obtidos
 
