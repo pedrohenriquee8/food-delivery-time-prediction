@@ -2,9 +2,9 @@ from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 
-from src.utils.constants import VALID_MODELS
-from src.utils.exceptions import ModelTrainingError
-from src.utils.validators import (
+from food_delivery_ml.utils.constants import VALID_MODELS
+from food_delivery_ml.utils.exceptions import ModelTrainingError
+from food_delivery_ml.utils.validators import (
     validate_dataframe_not_empty,
     validate_same_length,
 )

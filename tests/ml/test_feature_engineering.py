@@ -1,12 +1,12 @@
 import pandas as pd
 import pytest
 
-from src.features.feature_engineering import (
+from food_delivery_ml.features.feature_engineering import (
     create_interactions,
     create_peak_hours,
     map_ordinal_traffic,
 )
-from src.utils.exceptions import DataValidationError
+from food_delivery_ml.utils.exceptions import DataValidationError
 
 def test_map_ordinal_traffic_maps_values(valid_df):
     df = valid_df.drop(columns=['Order_ID']).copy()

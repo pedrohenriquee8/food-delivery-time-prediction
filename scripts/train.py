@@ -1,29 +1,33 @@
 import sys
+from pathlib import Path
 
-sys.path.append('.')
+ROOT_DIR = Path(__file__).resolve().parents[1]
+ML_SRC_DIR = ROOT_DIR / 'packages' / 'ml' / 'src'
+
+sys.path.insert(0, str(ML_SRC_DIR))
 
 import joblib
 import pandas as pd
 
-from metrics.metrics import calculate_metrics, plot_importances, save_metrics
-from src.features.feature_engineering import (
+from food_delivery_ml.evaluation.metrics import calculate_metrics, plot_importances, save_metrics
+from food_delivery_ml.features.feature_engineering import (
     create_interactions,
     create_peak_hours,
     map_ordinal_traffic,
 )
-from src.ingestion.load_data import load_data
-from src.models.train import train_model
-from src.preprocessing.clear_data import remove_outliers_iqr, treat_missing_values
-from src.preprocessing.data_splitter import separate_training_test
-from src.preprocessing.eda import correlations, descriptive_statistics, plot_distribution_target
-from src.preprocessing.pipeline_preprocess import create_preprocessor
-from src.utils.constants import (
+from food_delivery_ml.ingestion.load_data import load_data
+from food_delivery_ml.models.train import train_model
+from food_delivery_ml.preprocessing.clear_data import remove_outliers_iqr, treat_missing_values
+from food_delivery_ml.preprocessing.data_splitter import separate_training_test
+from food_delivery_ml.preprocessing.eda import correlations, descriptive_statistics, plot_distribution_target
+from food_delivery_ml.preprocessing.pipeline_preprocess import create_preprocessor
+from food_delivery_ml.utils.constants import (
     CATEGORICAL_FEATURE_COLUMNS,
     FEATURE_COLUMNS,
     NUMERIC_FEATURE_COLUMNS,
     TARGET_COLUMN,
 )
-from src.utils.exceptions import (
+from food_delivery_ml.utils.exceptions import (
     DataLoadError,
     DataValidationError,
     DeliveryPredictionError,
@@ -31,13 +35,17 @@ from src.utils.exceptions import (
     ModelTrainingError,
     PreprocessingError,
 )
-from src.utils.validators import ensure_directory, validate_no_nulls, validate_required_columns
+from food_delivery_ml.utils.validators import ensure_directory, validate_no_nulls, validate_required_columns
+
+DATA_PATH = ROOT_DIR / 'data' / 'raw' / 'food-delivery-times.csv'
+METRICS_DIR = ROOT_DIR / 'artifacts' / 'metrics'
+MODELS_DIR = ROOT_DIR / 'artifacts' / 'models'
 
 def run_pipeline():
-    ensure_directory('models_saved')
-    ensure_directory('metrics')
+    ensure_directory(str(MODELS_DIR))
+    ensure_directory(str(METRICS_DIR))
 
-    df = load_data('data/raw/food-delivery-times.csv')
+    df = load_data(str(DATA_PATH))
     
     df = treat_missing_values(df)
     
@@ -75,10 +83,10 @@ def run_pipeline():
         metricas = calculate_metrics(y_test, y_pred)
         results[name] = metricas
 
-        save_metrics(metricas, f'./metrics/metricas_{name}.csv')
+        save_metrics(metricas, str(METRICS_DIR / f'metricas_{name}.csv'))
 
-        model_path = f'./models_saved/{name}_model.pkl'
-        ensure_directory(model_path)
+        model_path = MODELS_DIR / f'{name}_model.pkl'
+        ensure_directory(str(model_path))
         joblib.dump(pipeline, model_path)
 
         if name in ['random_forest', 'gradient_boosting']:
@@ -92,8 +100,8 @@ def run_pipeline():
     print("\n=== Comparação de Modelos ===")
     print(df_resultados)
 
-    comparacao_path = './metrics/comparacao_modelos.csv'
-    ensure_directory(comparacao_path)
+    comparacao_path = METRICS_DIR / 'comparacao_modelos.csv'
+    ensure_directory(str(comparacao_path))
     df_resultados.to_csv(comparacao_path)
 
 def main():

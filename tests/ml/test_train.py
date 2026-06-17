@@ -1,9 +1,9 @@
 import pytest
 
-from src.models.train import train_model
-from src.preprocessing.pipeline_preprocess import create_preprocessor
-from src.utils.constants import CATEGORICAL_FEATURE_COLUMNS, NUMERIC_FEATURE_COLUMNS
-from src.utils.exceptions import DataValidationError, ModelTrainingError
+from food_delivery_ml.models.train import train_model
+from food_delivery_ml.preprocessing.pipeline_preprocess import create_preprocessor
+from food_delivery_ml.utils.constants import CATEGORICAL_FEATURE_COLUMNS, NUMERIC_FEATURE_COLUMNS
+from food_delivery_ml.utils.exceptions import DataValidationError, ModelTrainingError
 
 @pytest.fixture
 def train_data(feature_df):

@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 
-from src.ingestion.load_data import load_data
-from src.utils.exceptions import DataLoadError, DataValidationError
+from food_delivery_ml.ingestion.load_data import load_data
+from food_delivery_ml.utils.exceptions import DataLoadError, DataValidationError
 
 def test_load_data_remove_order_id(valid_csv):
     df = load_data(valid_csv)

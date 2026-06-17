@@ -1,5 +1,5 @@
-from src.utils.constants import TIME_OF_DAY_VALUES, TRAFFIC_LEVEL_VALUES
-from src.utils.validators import (
+from food_delivery_ml.utils.constants import TIME_OF_DAY_VALUES, TRAFFIC_LEVEL_VALUES
+from food_delivery_ml.utils.validators import (
     validate_categorical_values,
     validate_column_exists,
     validate_required_columns,

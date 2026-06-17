@@ -5,8 +5,8 @@ import pytest
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 
-from metrics.metrics import calculate_metrics, plot_importances, save_metrics
-from src.utils.exceptions import DataValidationError, MetricsError
+from food_delivery_ml.evaluation.metrics import calculate_metrics, plot_importances, save_metrics
+from food_delivery_ml.utils.exceptions import DataValidationError, MetricsError
 
 def test_calculate_metrics_returns_expected_keys():
     y_true = np.array([10, 20, 30])
@@ -43,5 +43,5 @@ def test_plot_importances_raises_for_model_without_importances():
     pipeline.fit([[1], [2], [3]], [10, 20, 30])
 
     with pytest.raises(MetricsError, match="feature_importances_"):
-        with patch('metrics.metrics.plt.show'):
+        with patch('food_delivery_ml.evaluation.metrics.plt.show'):
             plot_importances(pipeline, ['feature_1'])

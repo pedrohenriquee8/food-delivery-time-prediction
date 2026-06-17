@@ -2,8 +2,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.utils.exceptions import PreprocessingError
-from src.utils.validators import validate_no_column_overlap
+from food_delivery_ml.utils.exceptions import PreprocessingError
+from food_delivery_ml.utils.validators import validate_no_column_overlap
 
 def create_preprocessor(numericas, categoricas):
     ''' Controí um pré-processador automático aplicando StandardScaler nas numéricas e OneHotEncoder nas categóricas 

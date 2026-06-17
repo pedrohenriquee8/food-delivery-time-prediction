@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from src.utils.exceptions import DataLoadError, DataValidationError
+from food_delivery_ml.utils.exceptions import DataLoadError, DataValidationError
 
 def validate_file_exists(path):
     """

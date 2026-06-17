@@ -3,8 +3,10 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from src.utils.exceptions import MetricsError
-from src.utils.validators import ensure_directory, validate_same_length
+from food_delivery_ml.utils.exceptions import MetricsError
+from food_delivery_ml.utils.validators import ensure_directory, validate_same_length
+
+METRICS_DIR = './artifacts/metrics'
 
 def calculate_metrics(y_true, y_pred):
     ''' Calcula métrica MAE, MSE, RMSE e R2 para avaliação 
@@ -26,7 +28,7 @@ def calculate_metrics(y_true, y_pred):
 
     return {'MAE': mae, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
 
-def save_metrics(metricas_dict, arquivo='./metrics/metricas.csv'):
+def save_metrics(metricas_dict, arquivo=f'{METRICS_DIR}/metricas.csv'):
     ''' Salva as métricas 
     
         :param metricas_dict: dicionário com as métricas calculadas
@@ -78,6 +80,7 @@ def plot_importances(modelo_pipeline, feature_names, top_n=20):
     plt.gca().invert_yaxis()
     plt.tight_layout()
 
-    ensure_directory('./metrics/importancias_features.png')
-    plt.savefig('./metrics/importancias_features.png')
+    output_path = f'{METRICS_DIR}/importancias_features.png'
+    ensure_directory(output_path)
+    plt.savefig(output_path)
     plt.show()

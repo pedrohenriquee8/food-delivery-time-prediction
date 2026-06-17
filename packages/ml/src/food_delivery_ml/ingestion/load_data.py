@@ -1,8 +1,8 @@
 import pandas as pd
 
-from src.utils.constants import OPTIONAL_COLUMNS, REQUIRED_COLUMNS
-from src.utils.exceptions import DataLoadError
-from src.utils.validators import (
+from food_delivery_ml.utils.constants import OPTIONAL_COLUMNS, REQUIRED_COLUMNS
+from food_delivery_ml.utils.exceptions import DataLoadError
+from food_delivery_ml.utils.validators import (
     validate_dataframe_not_empty,
     validate_file_exists,
     validate_required_columns,

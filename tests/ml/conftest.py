@@ -5,7 +5,7 @@ os.environ.setdefault('MPLBACKEND', 'Agg')
 import pandas as pd
 import pytest
 
-from src.features.feature_engineering import (
+from food_delivery_ml.features.feature_engineering import (
     create_interactions,
     create_peak_hours,
     map_ordinal_traffic,

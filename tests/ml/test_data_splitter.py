@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 
-from src.preprocessing.data_splitter import separate_training_test
-from src.utils.exceptions import DataValidationError, PreprocessingError
+from food_delivery_ml.preprocessing.data_splitter import separate_training_test
+from food_delivery_ml.utils.exceptions import DataValidationError, PreprocessingError
 
 def test_separate_training_test_is_reproducible(feature_df):
     X = feature_df.drop(columns=['Delivery_Time_min'])

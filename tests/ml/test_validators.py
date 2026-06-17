@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 
-from src.utils.exceptions import DataLoadError, DataValidationError
-from src.utils.validators import (
+from food_delivery_ml.utils.exceptions import DataLoadError, DataValidationError
+from food_delivery_ml.utils.validators import (
     ensure_directory,
     validate_categorical_values,
     validate_column_exists,

@@ -1,9 +1,9 @@
 import pytest
 from sklearn.compose import ColumnTransformer
 
-from src.preprocessing.pipeline_preprocess import create_preprocessor
-from src.utils.constants import CATEGORICAL_FEATURE_COLUMNS, NUMERIC_FEATURE_COLUMNS
-from src.utils.exceptions import DataValidationError, PreprocessingError
+from food_delivery_ml.preprocessing.pipeline_preprocess import create_preprocessor
+from food_delivery_ml.utils.constants import CATEGORICAL_FEATURE_COLUMNS, NUMERIC_FEATURE_COLUMNS
+from food_delivery_ml.utils.exceptions import DataValidationError, PreprocessingError
 
 def test_create_preprocessor_returns_column_transformer():
     preprocessor = create_preprocessor(

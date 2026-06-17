@@ -3,8 +3,8 @@ import warnings
 import pandas as pd
 from sklearn.impute import SimpleImputer
 
-from src.utils.exceptions import PreprocessingError
-from src.utils.validators import (
+from food_delivery_ml.utils.exceptions import PreprocessingError
+from food_delivery_ml.utils.validators import (
     validate_column_exists,
     validate_dataframe_not_empty,
     validate_no_nulls,

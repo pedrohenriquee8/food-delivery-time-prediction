@@ -1,7 +1,7 @@
 from sklearn.model_selection import train_test_split
 
-from src.utils.exceptions import PreprocessingError
-from src.utils.validators import (
+from food_delivery_ml.utils.exceptions import PreprocessingError
+from food_delivery_ml.utils.validators import (
     validate_dataframe_not_empty,
     validate_same_length,
     validate_test_size,

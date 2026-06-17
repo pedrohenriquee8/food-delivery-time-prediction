@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 
-from src.preprocessing.clear_data import remove_outliers_iqr, treat_missing_values
-from src.utils.exceptions import DataValidationError, PreprocessingError
+from food_delivery_ml.preprocessing.clear_data import remove_outliers_iqr, treat_missing_values
+from food_delivery_ml.utils.exceptions import DataValidationError, PreprocessingError
 
 def test_treat_missing_values_fills_numeric_and_categorical(valid_df):
     df = valid_df.drop(columns=['Order_ID']).copy()
