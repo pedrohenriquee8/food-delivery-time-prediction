@@ -1,33 +1,31 @@
-import { Suspense } from 'react'
-import { HeaderSkeleton } from './components/skeletons/HeaderSkeleton'
-import { SidebarSkeleton } from './components/skeletons/SidebarSkeleton'
+import { lazy } from 'react'
 import { LocationProvider } from './context/LocationContext'
 import { HomePage } from './pages/HomePage'
-import { lazyWithDelay } from './lib/lazyWithDelay'
+import { HeaderSkeleton } from './components/skeletons/HeaderSkeleton'
+import { SidebarSkeleton } from './components/skeletons/SidebarSkeleton'
+import { SuspensePresence } from './lib/SuspensePresence'
 
-const LazyHeader = lazyWithDelay(
-  () => import('./components/Header'),
-  'Header'
+const LazyHeader = lazy(() =>
+  import('./components/Header').then((module) => ({ default: module.Header }))
 )
 
-const LazySidebar = lazyWithDelay(
-  () => import('./components/Sidebar'),
-  'Sidebar'
+const LazySidebar = lazy(() =>
+  import('./components/Sidebar').then((module) => ({ default: module.Sidebar }))
 )
 
 function App() {
   return (
     <LocationProvider>
-      <div className="min-h-screen bg-white">
-        <Suspense fallback={<HeaderSkeleton />}>
+      <div className="min-h-screen min-w-0 bg-white">
+        <SuspensePresence fallback={<HeaderSkeleton />} overlay={false}>
           <LazyHeader />
-        </Suspense>
+        </SuspensePresence>
 
-        <Suspense fallback={<SidebarSkeleton />}>
+        <SuspensePresence fallback={<SidebarSkeleton />} overlay={false}>
           <LazySidebar />
-        </Suspense>
+        </SuspensePresence>
 
-        <main className="min-h-screen overflow-x-clip pt-16 lg:ml-[220px]">
+        <main className="min-h-screen min-w-0 overflow-x-clip pt-16 lg:ml-[220px]">
           <HomePage />
         </main>
       </div>

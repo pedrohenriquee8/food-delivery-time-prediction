@@ -1,84 +1,117 @@
-import { Suspense, useMemo, useState } from 'react'
-import { CategoryCarouselSkeleton } from '../components/skeletons/CategoryCarouselSkeleton'
-import { FilterBarSkeleton } from '../components/skeletons/FilterBarSkeleton'
-import { PromotionalBannerSkeleton } from '../components/skeletons/PromotionalBannerSkeleton'
-import { RestaurantSectionSkeleton } from '../components/skeletons/RestaurantSectionSkeleton'
-import { promotionalBanners, restaurantSections } from '../data/restaurants'
-import { lazyWithDelay } from '../lib/lazyWithDelay'
-import type { Banner, RestaurantSection as RestaurantSectionType } from '../types'
-
-const LazyCategoryCarousel = lazyWithDelay(
-  () => import('../components/CategoryCarousel'),
-  'CategoryCarousel'
-)
-
-const LazyFilterBar = lazyWithDelay(
-  () => import('../components/FilterBar'),
-  'FilterBar'
-)
-
-const LazyPromotionalBanner = lazyWithDelay<{ banner: Banner }>(
-  () => import('../components/PromotionalBanner'),
-  'PromotionalBanner'
-)
-
-const LazyRestaurantSection = lazyWithDelay<{ section: RestaurantSectionType }>(
-  () => import('../components/RestaurantSection'),
-  'RestaurantSection'
-)
+import { useCallback, useEffect, useState } from 'react'
+import { CategoryCarousel } from '../components/CategoryCarousel'
+import { FilterBar } from '../components/FilterBar'
+import { PromotionalBanner } from '../components/PromotionalBanner'
+import { RestaurantSection } from '../components/RestaurantSection'
+import { HomePageSkeleton } from '../components/skeletons/HomePageSkeleton'
+import {
+  fetchBanners,
+  fetchCategories,
+  fetchFilters,
+  fetchRestaurantSections,
+} from '../lib/api'
+import { waitMinLoading } from '../lib/minLoading'
+import { PresenceSwap } from '../lib/PresenceSwap'
+import type { ApiFilter, Banner, Category, RestaurantSection as RestaurantSectionType } from '../types'
 
 export function HomePage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [filters, setFilters] = useState<ApiFilter[]>([])
+  const [banners, setBanners] = useState<Banner[]>([])
+  const [sections, setSections] = useState<RestaurantSectionType[]>([])
+  const [isReady, setIsReady] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const filteredSections = useMemo(() => {
-    if (!selectedCategoryId) return restaurantSections
+  const loadInitialCatalog = useCallback(async () => {
+    setError(null)
 
-    return restaurantSections
-      .map((section) => ({
-        ...section,
-        restaurants: section.restaurants.filter((restaurant) =>
-          restaurant.categoryIds.includes(selectedCategoryId)
-        ),
-      }))
-      .filter((section) => section.restaurants.length > 0)
-  }, [selectedCategoryId])
+    const startTime = Date.now()
+
+    try {
+      const [categoriesData, filtersData, bannersData, sectionsData] = await Promise.all([
+        fetchCategories(),
+        fetchFilters(),
+        fetchBanners(),
+        fetchRestaurantSections(),
+      ])
+
+      await waitMinLoading(startTime)
+
+      setCategories(categoriesData)
+      setFilters(filtersData)
+      setBanners(bannersData)
+      setSections(sectionsData)
+      setIsReady(true)
+    } catch {
+      setError('Não foi possível carregar o catálogo. Verifique se a API está em execução.')
+    }
+  }, [])
+
+  const loadSections = useCallback(async (categoryId: string | null) => {
+    try {
+      const sectionsData = await fetchRestaurantSections(categoryId)
+      setSections(sectionsData)
+    } catch {
+      setError('Não foi possível carregar os restaurantes desta categoria.')
+    }
+  }, [])
+
+  useEffect(() => {
+    void loadInitialCatalog()
+  }, [loadInitialCatalog])
+
+  useEffect(() => {
+    if (!isReady) return
+    void loadSections(selectedCategoryId)
+  }, [isReady, selectedCategoryId, loadSections])
+
+  if (error && !isReady) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 py-4 sm:px-6">
+        <p className="text-center text-sm text-gray-500">{error}</p>
+        <button
+          type="button"
+          onClick={() => void loadInitialCatalog()}
+          className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+        >
+          Tentar novamente
+        </button>
+      </div>
+    )
+  }
 
   return (
-    <div className="space-y-6 px-4 py-4 sm:px-6">
-      <Suspense fallback={<CategoryCarouselSkeleton />}>
-        <LazyCategoryCarousel
+    <PresenceSwap showContent={isReady} fallback={<HomePageSkeleton />}>
+      <div className="space-y-6 px-4 py-4 sm:px-6">
+        <CategoryCarousel
+          categories={categories}
           selectedCategoryId={selectedCategoryId}
           onCategorySelect={setSelectedCategoryId}
         />
-      </Suspense>
 
-      <Suspense fallback={<FilterBarSkeleton />}>
-        <LazyFilterBar />
-      </Suspense>
+        <FilterBar filters={filters} />
 
-      <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
-        {promotionalBanners.map((banner) => (
-          <div key={banner.id} className="flex h-48 min-w-0">
-            <Suspense fallback={<PromotionalBannerSkeleton />}>
-              <LazyPromotionalBanner banner={banner} />
-            </Suspense>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
+          {banners.map((banner) => (
+            <div key={banner.id} className="flex h-48 min-w-0">
+              <PromotionalBanner banner={banner} />
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-6">
+          {sections.length > 0 ? (
+            sections.map((section) => (
+              <RestaurantSection key={section.id} section={section} />
+            ))
+          ) : (
+            <p className="py-8 text-center text-sm text-gray-500">
+              Nenhum restaurante encontrado nesta categoria.
+            </p>
+          )}
+        </div>
       </div>
-
-      <div className="space-y-6">
-        {filteredSections.length > 0 ? (
-          filteredSections.map((section) => (
-            <Suspense key={section.id} fallback={<RestaurantSectionSkeleton />}>
-              <LazyRestaurantSection section={section} />
-            </Suspense>
-          ))
-        ) : (
-          <p className="py-8 text-center text-sm text-gray-500">
-            Nenhum restaurante encontrado nesta categoria.
-          </p>
-        )}
-      </div>
-    </div>
+    </PresenceSwap>
   )
 }
