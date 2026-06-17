@@ -231,3 +231,20 @@ Uma análise da importância das features geradas é importante para modelos bas
 
 ## Referências
 
+ALLIBHAI, Jaz.  Hold-out vs. Cross-validation in Machine Learning. Medium, 2018. Disponível em: https://medium.com/@jaz1/holdout-vs-cross-validation-in-machine-learning-7637112d3f8f. Acesso em: 16 jun. 2026.
+
+CLARK, Bryan; LEE, Fangfang. What is gradient boosting? IBM, [s.d.]. Disponível em: https://www.ibm.com/think/topics/gradient-boosting. Acesso em: 16 jun. 2026.
+
+KAGGLE. Kaggle, 2010. Disponível em: https://www.kaggle.com/. Acesso em: 11  jun. 2026.
+
+LEE, Fangfang. Classification versus regression. IBM, [s.d.]. Disponível em: https://www.ibm.com/think/topics/classification-vs-regression. Acesso em: 16 jun. 2026.
+
+ORTEGA, Cristina.  Matriz de correlação: o que é, como funciona e exemplos. QuestionPro, [s.d.]. Disponível em:  https://www.questionpro.com/blog/pt-br/matriz-de-correlacao/. Acesso em: 16 jun. 2026.
+
+PERES, Fernanda F. O que é um outlier?. Blog Fernanda Peres, São Paulo, 16 jan. 2026. Disponível em: https://fernandafperes.com.br/blog/outliers/. Acesso em: 16 jun. 2026.
+
+TALKS, Laura Data. Regressão Linear?. Medium, 2020. Disponível em: https://medium.com/@lauradatatalks/regress%C3%A3o-linear-6a7f247c3e29. Acesso em: 16 jun. 2026.
+
+TEICHMANN, Fabiano. Entendo IQR para dados dispersos. Medium, 2024. Disponível em: https://fabiano-geek.medium.com/entendo-a-dispers%C3%A3o-de-dados-com-iqr-4347b450829a. Acesso em: 16 jun. 2026.
+
+VOGEL, João. Lidando Com Valores Ausentes. Medium, 2024. Disponível em: https://medium.com/@joaofreitasvogel/lidando-com-valores-ausentes-3c1463d71e76. Acesso em: 16 jun. 2026.
