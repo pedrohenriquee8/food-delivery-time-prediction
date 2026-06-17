@@ -39,6 +39,15 @@ export interface Filter {
   hasDropdown?: boolean
 }
 
+export type FilterIconSlug = 'tag' | 'star' | 'crown'
+
+export interface ApiFilter {
+  id: string
+  label: string
+  icon?: FilterIconSlug
+  hasDropdown?: boolean
+}
+
 export interface Banner {
   id: string
   variant: 'pink' | 'teal'
