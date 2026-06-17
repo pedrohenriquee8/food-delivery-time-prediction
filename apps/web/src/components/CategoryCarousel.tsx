@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { categories } from '../data/categories'
 import { useHorizontalScroll } from '../lib/useHorizontalScroll'
+import type { Category } from '../types'
 import { CategoryItem } from './CategoryItem'
 
 interface CategoryCarouselProps {
+  categories: Category[]
   selectedCategoryId?: string | null
   onCategorySelect?: (categoryId: string | null) => void
 }
 
 export function CategoryCarousel({
+  categories,
   selectedCategoryId: controlledSelectedId,
   onCategorySelect,
 }: CategoryCarouselProps) {

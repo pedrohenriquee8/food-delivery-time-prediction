@@ -1,8 +1,18 @@
 import { useState } from 'react'
-import { filters, FILTER_BAR_CLASS } from '../data/filters'
+import { resolveFilterIcon } from '../lib/filterIcons'
+import type { ApiFilter } from '../types'
 import { FilterChip } from './FilterChip'
 
-export function FilterBar() {
+export const FILTER_CHIP_HEIGHT = 38
+
+export const FILTER_BAR_CLASS =
+  'scrollbar-hide flex min-h-[46px] gap-2 overflow-x-auto py-1.5'
+
+interface FilterBarProps {
+  filters: ApiFilter[]
+}
+
+export function FilterBar({ filters }: FilterBarProps) {
   const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null)
 
   const handleFilterClick = (id: string) => {
@@ -15,7 +25,7 @@ export function FilterBar() {
         <FilterChip
           key={filter.id}
           label={filter.label}
-          icon={filter.icon}
+          icon={resolveFilterIcon(filter.icon)}
           hasDropdown={filter.hasDropdown}
           selected={selectedFilterId === filter.id}
           onClick={() => handleFilterClick(filter.id)}
