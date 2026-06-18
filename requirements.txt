@@ -7,3 +7,5 @@ joblib
 pytest
 fastapi
 uvicorn[standard]
+redis
+pydantic-settings
