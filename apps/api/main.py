@@ -1,6 +1,8 @@
+import asyncio
+from contextlib import asynccontextmanager
 from typing import Literal
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -10,8 +12,21 @@ from apps.api.catalog import (
     FILTERS,
     get_restaurant_sections,
 )
+from apps.api.websocket import delivery_websocket, listen_for_results
 
-app = FastAPI(title="Food Delivery API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    listener_task = asyncio.create_task(listen_for_results())
+    yield
+    listener_task.cancel()
+    try:
+        await listener_task
+    except asyncio.CancelledError:
+        pass
+
+
+app = FastAPI(title="Food Delivery API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,8 +49,6 @@ class Restaurant(BaseModel):
     imageUrl: str
     rating: float
     reviewCount: str
-    distance: str
-    estimatedTime: str
     deliveryFee: str
     promotion: str | None = None
     categoryIds: list[str]
@@ -95,3 +108,8 @@ def list_banners() -> list[Banner]:
 @app.get("/api/filters", response_model=list[Filter])
 def list_filters() -> list[Filter]:
     return [Filter(**filter_item) for filter_item in FILTERS]
+
+
+@app.websocket("/ws/delivery")
+async def ws_delivery(websocket: WebSocket) -> None:
+    await delivery_websocket(websocket)
