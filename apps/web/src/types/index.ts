@@ -12,11 +12,11 @@ export interface Restaurant {
   imageUrl: string
   rating: number
   reviewCount: string
-  distance?: string
-  estimatedTime?: string
-  deliveryFee: string
+  preparationTimeMin: number
   promotion?: string
   categoryIds: string[]
+  lat: number
+  lng: number
 }
 
 export interface RestaurantSection {
