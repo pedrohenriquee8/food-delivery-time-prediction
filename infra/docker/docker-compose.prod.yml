@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:7-alpine
+    image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/redis:${IMAGE_TAG:-latest}
     restart: unless-stopped
     volumes:
       - redis_data:/data
@@ -11,9 +11,7 @@ services:
       retries: 5
 
   api:
-    build:
-      context: ../..
-      dockerfile: infra/docker/Dockerfile
+    image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/api:${IMAGE_TAG:-latest}
     command: uvicorn apps.api.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
     environment:
@@ -35,9 +33,7 @@ services:
       start_period: 10s
 
   worker:
-    build:
-      context: ../..
-      dockerfile: infra/docker/Dockerfile
+    image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/worker:${IMAGE_TAG:-latest}
     command: python -m apps.api.worker
     restart: unless-stopped
     environment:
@@ -47,9 +43,7 @@ services:
         condition: service_healthy
 
   web:
-    build:
-      context: ../..
-      dockerfile: infra/docker/Dockerfile.web
+    image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/web:${IMAGE_TAG:-latest}
     restart: unless-stopped
     ports:
       - "${WEB_PORT:-8080}:80"

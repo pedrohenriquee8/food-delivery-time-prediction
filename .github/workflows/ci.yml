@@ -53,4 +53,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build production images
-        run: docker compose -f infra/docker/docker-compose.prod.yml build
+        run: |
+          docker build -f infra/docker/Dockerfile .
+          docker build -f infra/docker/Dockerfile.web .
