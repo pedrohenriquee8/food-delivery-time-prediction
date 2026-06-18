@@ -49,9 +49,11 @@ class Restaurant(BaseModel):
     imageUrl: str
     rating: float
     reviewCount: str
-    deliveryFee: str
+    preparationTimeMin: int
     promotion: str | None = None
     categoryIds: list[str]
+    lat: float
+    lng: float
 
 
 class RestaurantSection(BaseModel):

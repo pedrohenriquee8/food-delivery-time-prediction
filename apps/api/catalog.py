@@ -24,6 +24,10 @@ BURGER_HOUSE = {
     "deliveryFee": "Entrega grátis acima de R$ 35",
     "promotion": "Item grátis em pedidos acima de R$ 50",
     "categoryIds": ["hamburgueres", "fast-food"],
+    "lat": -9.769635,
+    "lng": -36.691982,
+    "preparationTimeMin": 10,
+    "courierExperienceYrs": 2.0,
 }
 
 TACO_STATION = {
@@ -35,6 +39,10 @@ TACO_STATION = {
     "deliveryFee": "Taxa de entrega R$ 4,99",
     "promotion": "20% off no primeiro pedido",
     "categoryIds": ["mexicana", "latina"],
+    "lat": -9.750420,
+    "lng": -36.637629,
+    "preparationTimeMin": 12,
+    "courierExperienceYrs": 1.5,
 }
 
 THE_MELTED = {
@@ -46,6 +54,10 @@ THE_MELTED = {
     "deliveryFee": "Entrega grátis acima de R$ 40",
     "promotion": "Combo duplo por R$ 29,90",
     "categoryIds": ["hamburgueres", "sanduiches", "fast-food"],
+    "lat": -9.747125,
+    "lng": -36.640100,
+    "preparationTimeMin": 10,
+    "courierExperienceYrs": 2.0,
 }
 
 WING_SPOT = {
@@ -57,6 +69,10 @@ WING_SPOT = {
     "deliveryFee": "Taxa de entrega R$ 6,99",
     "promotion": "Asas em dobro às quartas",
     "categoryIds": ["frango", "fast-food"],
+    "lat": -9.777596,
+    "lng": -36.667551,
+    "preparationTimeMin": 12,
+    "courierExperienceYrs": 1.5,
 }
 
 PIZZA_CLUB = {
@@ -68,6 +84,10 @@ PIZZA_CLUB = {
     "deliveryFee": "Entrega grátis acima de R$ 45",
     "promotion": "2ª pizza pela metade do preço",
     "categoryIds": ["pizza"],
+    "lat": -9.781714,
+    "lng": -36.649982,
+    "preparationTimeMin": 25,
+    "courierExperienceYrs": 2.5,
 }
 
 CHICKEN_EXPRESS = {
@@ -79,6 +99,10 @@ CHICKEN_EXPRESS = {
     "deliveryFee": "Taxa de entrega R$ 3,99",
     "promotion": "Balde família com 15% off",
     "categoryIds": ["frango", "fast-food"],
+    "lat": -9.751518,
+    "lng": -36.640649,
+    "preparationTimeMin": 10,
+    "courierExperienceYrs": 1.5,
 }
 
 FRESH_BOWL = {
@@ -90,6 +114,10 @@ FRESH_BOWL = {
     "deliveryFee": "Entrega grátis acima de R$ 30",
     "promotion": "Bowl do dia com desconto",
     "categoryIds": ["saudavel"],
+    "lat": -9.753165,
+    "lng": -36.631590,
+    "preparationTimeMin": 15,
+    "courierExperienceYrs": 2.0,
 }
 
 COFFEE_CORNER = {
@@ -101,6 +129,10 @@ COFFEE_CORNER = {
     "deliveryFee": "Taxa de entrega R$ 2,99",
     "promotion": "Café + pão de queijo por R$ 12",
     "categoryIds": ["cafe", "cafe-manha"],
+    "lat": -9.758106,
+    "lng": -36.669198,
+    "preparationTimeMin": 8,
+    "courierExperienceYrs": 1.5,
 }
 
 SUSHI_WAVE = {
@@ -112,6 +144,10 @@ SUSHI_WAVE = {
     "deliveryFee": "Entrega grátis acima de R$ 60",
     "promotion": "Combinado especial R$ 49,90",
     "categoryIds": ["saudavel"],
+    "lat": -9.738890,
+    "lng": -36.691159,
+    "preparationTimeMin": 20,
+    "courierExperienceYrs": 2.5,
 }
 
 PASTA_LAB = {
@@ -123,6 +159,10 @@ PASTA_LAB = {
     "deliveryFee": "Taxa de entrega R$ 5,49",
     "promotion": "Massa artesanal com molho grátis",
     "categoryIds": ["comida-caseira"],
+    "lat": -9.738341,
+    "lng": -36.673865,
+    "preparationTimeMin": 22,
+    "courierExperienceYrs": 2.0,
 }
 
 BBQ_NATION = {
@@ -134,6 +174,10 @@ BBQ_NATION = {
     "deliveryFee": "Entrega grátis acima de R$ 55",
     "promotion": "Ribs com acompanhamento grátis",
     "categoryIds": ["carnes"],
+    "lat": -9.788027,
+    "lng": -36.660688,
+    "preparationTimeMin": 28,
+    "courierExperienceYrs": 3.0,
 }
 
 SWEET_TREATS = {
@@ -145,7 +189,28 @@ SWEET_TREATS = {
     "deliveryFee": "Taxa de entrega R$ 4,49",
     "promotion": "Sobremesa grátis acima de R$ 40",
     "categoryIds": ["sobremesas"],
+    "lat": -9.768812,
+    "lng": -36.635708,
+    "preparationTimeMin": 15,
+    "courierExperienceYrs": 1.5,
 }
+
+ALL_RESTAURANTS = [
+    BURGER_HOUSE,
+    TACO_STATION,
+    THE_MELTED,
+    WING_SPOT,
+    PIZZA_CLUB,
+    CHICKEN_EXPRESS,
+    FRESH_BOWL,
+    COFFEE_CORNER,
+    SUSHI_WAVE,
+    PASTA_LAB,
+    BBQ_NATION,
+    SWEET_TREATS,
+]
+
+RESTAURANTS_BY_ID = {restaurant["id"]: restaurant for restaurant in ALL_RESTAURANTS}
 
 RESTAURANT_SECTIONS = [
     {
@@ -203,6 +268,10 @@ FILTERS = [
     {"id": "price", "label": "Preço", "hasDropdown": True},
     {"id": "subscription", "label": "Assinatura", "icon": "crown"},
 ]
+
+
+def get_restaurant_by_id(restaurant_id: str) -> dict | None:
+    return RESTAURANTS_BY_ID.get(restaurant_id)
 
 
 def get_restaurant_sections(category_id: str | None = None) -> list[dict]:
