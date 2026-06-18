@@ -6,5 +6,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY apps ./apps
+COPY packages ./packages
+COPY artifacts/models ./artifacts/models
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app:/app/packages/ml/src
