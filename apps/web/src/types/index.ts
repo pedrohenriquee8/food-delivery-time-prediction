@@ -12,8 +12,8 @@ export interface Restaurant {
   imageUrl: string
   rating: number
   reviewCount: string
-  distance: string
-  estimatedTime: string
+  distance?: string
+  estimatedTime?: string
   deliveryFee: string
   promotion?: string
   categoryIds: string[]
@@ -80,4 +80,13 @@ export interface AddressSuggestion {
   label: string
   lat: number
   lng: number
+}
+
+export type DeliveryMetric = 'distance' | 'time'
+
+export type MetricStatus = 'idle' | 'loading' | 'ready' | 'error'
+
+export interface MetricState {
+  status: MetricStatus
+  value?: string
 }
