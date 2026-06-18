@@ -1,15 +1,50 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Heart, Star } from 'lucide-react'
-import type { Restaurant } from '../types'
+import { useDeliveryMetrics } from '../context/useDeliveryMetrics'
+import type { MetricState, Restaurant } from '../types'
 
 interface RestaurantCardProps {
   restaurant: Restaurant
 }
 
+function MetricSkeleton({ widthClass }: { widthClass: string }) {
+  return (
+    <span
+      className={`inline-block h-3.5 ${widthClass} animate-pulse rounded bg-gray-200`}
+      aria-hidden
+    />
+  )
+}
+
+function MetricValue({
+  metric,
+  loadingWidth,
+}: {
+  metric: MetricState
+  loadingWidth: string
+}) {
+  if (metric.status === 'loading') {
+    return <MetricSkeleton widthClass={loadingWidth} />
+  }
+
+  if (metric.status === 'ready' && metric.value) {
+    return <span>{metric.value}</span>
+  }
+
+  return null
+}
+
+function isMetricVisible(metric: MetricState): boolean {
+  return metric.status === 'loading' || (metric.status === 'ready' && Boolean(metric.value))
+}
+
 export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   const [isFavorite, setIsFavorite] = useState(false)
   const [imageError, setImageError] = useState(false)
+  const { distance, time } = useDeliveryMetrics(restaurant.id)
+
+  const showDistanceTimeSeparator = isMetricVisible(distance) || isMetricVisible(time)
 
   return (
     <motion.article
@@ -64,10 +99,10 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
           </span>
           <span>({restaurant.reviewCount})</span>
-          <span className="text-gray-400">•</span>
-          <span>{restaurant.distance}</span>
-          <span className="text-gray-400">•</span>
-          <span>{restaurant.estimatedTime}</span>
+          {showDistanceTimeSeparator && <span className="text-gray-400">•</span>}
+          <MetricValue metric={distance} loadingWidth="w-10" />
+          {showDistanceTimeSeparator && <span className="text-gray-400">•</span>}
+          <MetricValue metric={time} loadingWidth="w-12" />
         </div>
 
         <p className="text-sm text-gray-600">{restaurant.deliveryFee}</p>
