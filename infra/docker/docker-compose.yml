@@ -1,3 +1,5 @@
+# Development stack with bind mounts. For production, use docker-compose.prod.yml.
+
 services:
   redis:
     image: redis:7-alpine

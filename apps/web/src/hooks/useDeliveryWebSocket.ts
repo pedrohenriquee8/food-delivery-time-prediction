@@ -41,7 +41,9 @@ export function useDeliveryWebSocket(onResult: MessageHandler) {
   const [isConnected, setIsConnected] = useState(false)
   const [connectionVersion, setConnectionVersion] = useState(0)
 
-  onResultRef.current = onResult
+  useEffect(() => {
+    onResultRef.current = onResult
+  }, [onResult])
 
   useEffect(() => {
     let disposed = false

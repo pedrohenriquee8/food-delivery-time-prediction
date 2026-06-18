@@ -168,6 +168,22 @@ food-delivery-time-prediction/
     # Executar um teste específico
     pytest tests/ml/test_load_data.py::test_load_data_remove_order_id
 
+### Docker
+
+**Desenvolvimento** (API + worker + Redis com bind mount do código):
+
+```bash
+docker compose -f infra/docker/docker-compose.yml up -d --build
+```
+
+**Produção** (imagens baked, frontend via nginx, API acessível pelo proxy):
+
+```bash
+docker compose -f infra/docker/docker-compose.prod.yml up -d --build
+```
+
+Acesse em `http://localhost:8080` (porta configurável via `WEB_PORT` em `infra/docker/.env`).
+
 ## Escolhas de implementação
 
 1. **Python**
