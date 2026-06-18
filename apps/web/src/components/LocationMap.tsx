@@ -1,15 +1,18 @@
 import { useEffect } from 'react'
 import L from 'leaflet'
 import {
+  CircleMarker,
   MapContainer,
   Marker,
   TileLayer,
+  Tooltip,
   useMap,
   useMapEvents,
 } from 'react-leaflet'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+import { getRestaurantColor } from '../lib/restaurantColors'
 
 delete (L.Icon.Default.prototype as { _getIconUrl?: unknown })._getIconUrl
 
@@ -19,10 +22,18 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 })
 
+export interface RestaurantMapPoint {
+  id: string
+  name: string
+  lat: number
+  lng: number
+}
+
 interface LocationMapProps {
   center: { lat: number; lng: number }
   markerPosition: { lat: number; lng: number }
   onPositionChange: (position: { lat: number; lng: number }) => void
+  restaurants?: RestaurantMapPoint[]
 }
 
 function MapViewSync({ center }: { center: { lat: number; lng: number } }) {
@@ -56,6 +67,7 @@ export function LocationMap({
   center,
   markerPosition,
   onPositionChange,
+  restaurants = [],
 }: LocationMapProps) {
   return (
     <MapContainer
@@ -70,9 +82,27 @@ export function LocationMap({
       />
       <MapViewSync center={center} />
       <MapClickHandler onPositionChange={onPositionChange} />
+      {restaurants.map((restaurant) => (
+        <CircleMarker
+          key={restaurant.id}
+          center={[restaurant.lat, restaurant.lng]}
+          radius={7}
+          pathOptions={{
+            color: '#ffffff',
+            weight: 2,
+            fillColor: getRestaurantColor(restaurant.id),
+            fillOpacity: 1,
+          }}
+        >
+          <Tooltip direction="top" offset={[0, -6]} opacity={0.95}>
+            {restaurant.name}
+          </Tooltip>
+        </CircleMarker>
+      ))}
       <Marker
         position={[markerPosition.lat, markerPosition.lng]}
         draggable
+        zIndexOffset={1000}
         eventHandlers={{
           dragend: (event) => {
             const marker = event.target
@@ -83,7 +113,11 @@ export function LocationMap({
             })
           },
         }}
-      />
+      >
+        <Tooltip direction="top" offset={[0, -32]} opacity={0.95} permanent>
+          Você
+        </Tooltip>
+      </Marker>
     </MapContainer>
   )
 }
