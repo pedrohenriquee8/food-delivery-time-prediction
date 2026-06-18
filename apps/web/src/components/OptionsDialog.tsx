@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Loader2, MapPin, Search, X } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { Loader2, MapPin, X } from 'lucide-react'
 import { useDeliveryConditions } from '../context/useDeliveryConditions'
 import { useLocation } from '../context/useLocation'
-import { reverseGeocode, searchAddress } from '../lib/geocoding'
+import { fetchRestaurantSections } from '../lib/api'
+import { reverseGeocode } from '../lib/geocoding'
+import { getRestaurantColor } from '../lib/restaurantColors'
 import {
   TIME_OF_DAY_ICONS,
   TIME_OF_DAY_LABELS,
@@ -21,8 +23,8 @@ import {
   type VehicleType,
   type Weather,
 } from '../lib/delivery-conditions'
-import type { AddressSuggestion, GeolocationStatus, UserLocation } from '../types'
-import { LocationMap } from './LocationMap'
+import type { GeolocationStatus, Restaurant, UserLocation } from '../types'
+import { LocationMap, type RestaurantMapPoint } from './LocationMap'
 import { OptionGroup } from './OptionGroup'
 
 interface DeliveryConditionsDraft {
@@ -36,6 +38,7 @@ interface OptionsDialogContentProps {
   initialConditions: DeliveryConditionsDraft
   initialLocation: UserLocation | null
   defaultMapCenter: { lat: number; lng: number }
+  restaurants: RestaurantMapPoint[]
   onClose: () => void
   onConfirm: (conditions: DeliveryConditionsDraft, location: UserLocation) => void
   onUseMyLocation: () => Promise<UserLocation | null>
@@ -46,20 +49,17 @@ function OptionsDialogContent({
   initialConditions,
   initialLocation,
   defaultMapCenter,
+  restaurants,
   onClose,
   onConfirm,
   onUseMyLocation,
   geoStatus,
 }: OptionsDialogContentProps) {
-  const searchInputRef = useRef<HTMLInputElement>(null)
   const initialPosition = initialLocation ?? defaultMapCenter
   const [weather, setWeather] = useState(initialConditions.weather)
   const [traffic, setTraffic] = useState(initialConditions.traffic)
   const [timeOfDay, setTimeOfDay] = useState(initialConditions.timeOfDay)
   const [vehicle, setVehicle] = useState(initialConditions.vehicle)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([])
-  const [isSearching, setIsSearching] = useState(false)
   const [isGeocoding, setIsGeocoding] = useState(false)
   const [draftLabel, setDraftLabel] = useState(initialLocation?.label ?? '')
   const [draftPosition, setDraftPosition] = useState(initialPosition)
@@ -75,32 +75,6 @@ function OptionsDialogContent({
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
-
-  useEffect(() => {
-    const trimmed = searchQuery.trim()
-    if (trimmed.length < 3) {
-      return
-    }
-
-    const timeoutId = window.setTimeout(async () => {
-      const results = await searchAddress(trimmed)
-      setSuggestions(results)
-      setIsSearching(false)
-    }, 400)
-
-    return () => window.clearTimeout(timeoutId)
-  }, [searchQuery])
-
-  const handleSearchChange = useCallback((value: string) => {
-    setSearchQuery(value)
-    const trimmed = value.trim()
-    if (trimmed.length < 3) {
-      setSuggestions([])
-      setIsSearching(false)
-      return
-    }
-    setIsSearching(true)
-  }, [])
 
   const handlePositionChange = useCallback(
     async (position: { lat: number; lng: number }) => {
@@ -118,22 +92,12 @@ function OptionsDialogContent({
     []
   )
 
-  const handleSelectSuggestion = useCallback((suggestion: AddressSuggestion) => {
-    setDraftPosition({ lat: suggestion.lat, lng: suggestion.lng })
-    setMapCenter({ lat: suggestion.lat, lng: suggestion.lng })
-    setDraftLabel(suggestion.label)
-    setSearchQuery(suggestion.label)
-    setSuggestions([])
-  }, [])
-
   const handleUseMyLocation = useCallback(async () => {
     const result = await onUseMyLocation()
     if (result) {
       setDraftPosition({ lat: result.lat, lng: result.lng })
       setMapCenter({ lat: result.lat, lng: result.lng })
       setDraftLabel(result.label)
-      setSearchQuery(result.label)
-      setSuggestions([])
     }
   }, [onUseMyLocation])
 
@@ -224,41 +188,29 @@ function OptionsDialogContent({
           <section className="space-y-4 border-t border-gray-200 pt-6">
             <h3 className="text-sm font-semibold text-gray-900">Endereço de entrega</h3>
 
-            <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-              <input
-                ref={searchInputRef}
-                type="text"
-                value={searchQuery}
-                onChange={(event) => handleSearchChange(event.target.value)}
-                placeholder="Buscar endereço, rua ou bairro"
-                className="h-11 w-full rounded-full bg-gray-100 pl-10 pr-4 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-500 focus:bg-gray-50 focus:ring-2 focus:ring-primary/20"
-              />
-              {isSearching && (
-                <Loader2 className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-gray-400" />
-              )}
-              {suggestions.length > 0 && (
-                <ul className="absolute inset-x-0 top-full z-10 mt-1 max-h-48 overflow-y-auto rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
-                  {suggestions.map((suggestion) => (
-                    <li key={`${suggestion.lat}-${suggestion.lng}-${suggestion.label}`}>
-                      <button
-                        type="button"
-                        onClick={() => handleSelectSuggestion(suggestion)}
-                        className="w-full px-4 py-2.5 text-left text-sm text-gray-900 transition-colors hover:bg-gray-50"
-                      >
-                        {suggestion.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
             <LocationMap
               center={mapCenter}
               markerPosition={draftPosition}
               onPositionChange={handlePositionChange}
+              restaurants={restaurants}
             />
+
+            {restaurants.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-gray-500">Restaurantes no mapa</p>
+                <ul className="grid max-h-28 grid-cols-2 gap-x-3 gap-y-1.5 overflow-y-auto">
+                  {restaurants.map((restaurant) => (
+                    <li key={restaurant.id} className="flex min-w-0 items-center gap-1.5">
+                      <span
+                        className="h-2.5 w-2.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: getRestaurantColor(restaurant.id) }}
+                      />
+                      <span className="truncate text-xs text-gray-700">{restaurant.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="flex items-start gap-2 rounded-xl bg-gray-50 px-3 py-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -267,7 +219,7 @@ function OptionsDialogContent({
                   <p className="text-sm text-gray-500">Carregando endereço...</p>
                 ) : (
                   <p className="truncate text-sm font-medium text-gray-900">
-                    {draftLabel || 'Clique no mapa ou busque um endereço'}
+                    {draftLabel || 'Clique no mapa para selecionar o endereço'}
                   </p>
                 )}
               </div>
@@ -331,6 +283,37 @@ export function OptionsDialog() {
     requestLocation,
     geoStatus,
   } = useLocation()
+  const [restaurants, setRestaurants] = useState<RestaurantMapPoint[]>([])
+
+  useEffect(() => {
+    if (!isDialogOpen) return
+
+    let cancelled = false
+
+    void fetchRestaurantSections().then((sections) => {
+      if (cancelled) return
+
+      const byId = new Map<string, Restaurant>()
+      for (const section of sections) {
+        for (const restaurant of section.restaurants) {
+          byId.set(restaurant.id, restaurant)
+        }
+      }
+
+      setRestaurants(
+        [...byId.values()].map((restaurant) => ({
+          id: restaurant.id,
+          name: restaurant.name,
+          lat: restaurant.lat,
+          lng: restaurant.lng,
+        }))
+      )
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [isDialogOpen])
 
   const handleConfirm = useCallback(
     (conditions: DeliveryConditionsDraft, nextLocation: UserLocation) => {
@@ -359,6 +342,7 @@ export function OptionsDialog() {
       initialConditions={{ weather, traffic, timeOfDay, vehicle }}
       initialLocation={location}
       defaultMapCenter={defaultMapCenter}
+      restaurants={restaurants}
       onClose={closeDialog}
       onConfirm={handleConfirm}
       onUseMyLocation={requestLocation}
