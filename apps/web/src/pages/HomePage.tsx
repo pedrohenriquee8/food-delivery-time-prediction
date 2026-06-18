@@ -4,6 +4,7 @@ import { FilterBar } from '../components/FilterBar'
 import { PromotionalBanner } from '../components/PromotionalBanner'
 import { RestaurantSection } from '../components/RestaurantSection'
 import { HomePageSkeleton } from '../components/skeletons/HomePageSkeleton'
+import { DeliveryMetricsProvider } from '../context/DeliveryMetricsContext'
 import {
   fetchBanners,
   fetchCategories,
@@ -83,35 +84,37 @@ export function HomePage() {
 
   return (
     <PresenceSwap showContent={isReady} fallback={<HomePageSkeleton />}>
-      <div className="space-y-6 px-4 py-4 sm:px-6">
-        <CategoryCarousel
-          categories={categories}
-          selectedCategoryId={selectedCategoryId}
-          onCategorySelect={setSelectedCategoryId}
-        />
+      <DeliveryMetricsProvider sections={sections}>
+        <div className="space-y-6 px-4 py-4 sm:px-6">
+          <CategoryCarousel
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onCategorySelect={setSelectedCategoryId}
+          />
 
-        <FilterBar filters={filters} />
+          <FilterBar filters={filters} />
 
-        <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
-          {banners.map((banner) => (
-            <div key={banner.id} className="flex h-48 min-w-0">
-              <PromotionalBanner banner={banner} />
-            </div>
-          ))}
+          <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
+            {banners.map((banner) => (
+              <div key={banner.id} className="flex h-48 min-w-0">
+                <PromotionalBanner banner={banner} />
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-6">
+            {sections.length > 0 ? (
+              sections.map((section) => (
+                <RestaurantSection key={section.id} section={section} />
+              ))
+            ) : (
+              <p className="py-8 text-center text-sm text-gray-500">
+                Nenhum restaurante encontrado nesta categoria.
+              </p>
+            )}
+          </div>
         </div>
-
-        <div className="space-y-6">
-          {sections.length > 0 ? (
-            sections.map((section) => (
-              <RestaurantSection key={section.id} section={section} />
-            ))
-          ) : (
-            <p className="py-8 text-center text-sm text-gray-500">
-              Nenhum restaurante encontrado nesta categoria.
-            </p>
-          )}
-        </div>
-      </div>
+      </DeliveryMetricsProvider>
     </PresenceSwap>
   )
 }
