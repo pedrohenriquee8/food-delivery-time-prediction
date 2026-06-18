@@ -23,6 +23,10 @@ class CalculateMessage(BaseModel):
     metric: Literal["distance", "time"]
     lat: float
     lng: float
+    weather: Literal["Clear", "Rainy", "Foggy", "Windy", "Snowy"]
+    traffic: Literal["Low", "Medium", "High"]
+    timeOfDay: Literal["Morning", "Afternoon", "Evening", "Night"]
+    vehicle: Literal["Bike", "Scooter", "Car"]
 
 
 class ConnectionManager:

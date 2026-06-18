@@ -24,7 +24,15 @@ def process_job(payload: dict, client: redis.Redis) -> None:
     lng = payload["lng"]
     metric = payload["metric"]
 
-    metrics = calculate_delivery_metrics(restaurant_id, lat, lng)
+    metrics = calculate_delivery_metrics(
+        restaurant_id=restaurant_id,
+        lat=lat,
+        lng=lng,
+        weather=payload["weather"],
+        traffic=payload["traffic"],
+        time_of_day=payload["timeOfDay"],
+        vehicle=payload["vehicle"],
+    )
     value = metrics[metric_response_key(metric)]
 
     publish_result(
