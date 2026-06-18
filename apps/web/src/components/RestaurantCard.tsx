@@ -105,7 +105,9 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
           <MetricValue metric={time} loadingWidth="w-12" />
         </div>
 
-        <p className="text-sm text-gray-600">{restaurant.deliveryFee}</p>
+        <p className="text-sm text-gray-600">
+          {restaurant.preparationTimeMin} min de preparo
+        </p>
 
         {restaurant.promotion && (
           <p className="text-sm font-medium text-primary">{restaurant.promotion}</p>
