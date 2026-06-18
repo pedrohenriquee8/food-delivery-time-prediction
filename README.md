@@ -76,36 +76,44 @@ O dataset contém dois tipos de dados principais: valores numéricos (int e floa
 
 ```text
 food-delivery-time-prediction/
+├── apps/
+│   ├── api/
+│   └── web/
+├── artifacts/
+│   ├── metrics/
+│   │   ├── comparacao_modelos.csv
+│   │   ├── correlacao_heatmap.png
+│   │   ├── histograma.png
+│   │   ├── importancias_features.png
+│   │   └── metricas_*.csv
+│   └── models/
+│       ├── gradient_boosting_model.pkl
+│       ├── linear_model.pkl
+│       └── random_forest_model.pkl
 ├── data/
 │   └── raw/
 │       └── food-delivery-times.csv
-├── metrics/
-│   └── metrics.py
-├── models_saved/
-│   └── gradient_boosting_model.pkl
-│   └── linear_model.pkl
-│   └── random_forest_model.pkl
-├── src/
-│   ├── ingestion/
-│   │   └── load_data.py
-│   ├── utils/
-│   │   ├── constants.py
-│   │   ├── exceptions.py
-│   │   └── validators.py
-│   ├── features/
-│   │   └── feature_engineering.py
-│   ├── models/
-│   │   └── train.py
-│   └── preprocessing/
-│       ├── clear_data.py
-│       ├── data_splitter.py
-│       ├── eda.py
-│       └── pipeline_preprocess.py
+├── infra/
+│   ├── deploy/
+│   └── docker/
+├── packages/
+│   ├── ml/
+│   │   └── src/
+│   │       └── food_delivery_ml/
+│   │           ├── evaluation/
+│   │           ├── features/
+│   │           ├── ingestion/
+│   │           ├── models/
+│   │           ├── preprocessing/
+│   │           └── utils/
+│   └── shared/
+├── scripts/
+│   └── train.py
 ├── tests/
-│   ├── conftest.py
-│   └── test_*.py
+│   ├── api/
+│   ├── e2e/
+│   └── ml/
 ├── .gitignore
-├── main.py
 ├── pytest.ini
 ├── README.md
 └── requirements.txt
@@ -142,7 +150,7 @@ food-delivery-time-prediction/
 4. **Execute o pipeline:**
 
     ```bash
-    python main.py
+    python scripts/train.py
     ```
 
 5. **Execute os testes unitários**
@@ -155,10 +163,26 @@ food-delivery-time-prediction/
     pytest -v
 
     # Executar um arquivo específico
-    pytest tests/test_validators.py
+    pytest tests/ml/test_validators.py
 
     # Executar um teste específico
-    pytest tests/test_load_data.py::test_load_data_remove_order_id
+    pytest tests/ml/test_load_data.py::test_load_data_remove_order_id
+
+### Docker
+
+**Desenvolvimento** (API + worker + Redis com bind mount do código):
+
+```bash
+docker compose -f infra/docker/docker-compose.yml up -d --build
+```
+
+**Produção** (imagens baked, frontend via nginx, API acessível pelo proxy):
+
+```bash
+docker compose -f infra/docker/docker-compose.prod.yml up -d --build
+```
+
+Acesse em `http://localhost:8080` (porta configurável via `WEB_PORT` em `infra/docker/.env`).
 
 ## Escolhas de implementação
 
@@ -213,7 +237,7 @@ Portanto, **para este problema** e com os dados disponíveis, **a Regressão Lin
 
 A análise da distribuição da variável alvo (`Delivery_Time_min`) revelou que o tempo de entrega varia de 8 a 153 minutos, com **média** de **~55 min** e **mediana** de **~50 min** (aproximadamente), indicando assimetria à direita. Essa calda longa indica a presença de outliers, essa distribuição sugere a necessidade de modelos robustos a outliers (como Random Forest e Gradient Boosting) e justifica a remoção controlada de outliers via IQR somente na variável alvo.
 
-![](metrics/histograma.png)
+![](artifacts/metrics/histograma.png)
 
 ### Matriz de correlação
 
@@ -221,13 +245,13 @@ Com base na matriz de correlação (coeficiente de correlação de Person), pode
 
 As variáveis que representam **correlações menores** são as `Preparation_Time_min`, `Prep_x_Pico`, `Traffic_Level_ord`, que não influenciam tão fortemente no tempo final de entrega. Além disso, a variável `Horario_Pico` demonstrou que **não** possui relação linear **(0.00)** e `Courier_Experience_yrs` que possui **correlação negativa**.
 
-![](metrics/correlacao_heatmap.png)
+![](artifacts/metrics/correlacao_heatmap.png)
 
 ### Análise da importância das features
 
 Uma análise da importância das features geradas é importante para modelos baseados em árvores (Random Forest e Gradient Boosting), pois revela quais variáveis o modelo considera mais relevantes para fazer suas previsões. Sendo assim, colabora para avaliar se as features geradas agregam realmente valor. As features mais revelantes são **`Distance_km`** e **`Dist_x_Traffic`** demonstrando serem fatores determinantes para o valor da entrega.
 
-![](metrics/importancias_features.png)
+![](artifacts/metrics/importancias_features.png)
 
 ## Referências
 

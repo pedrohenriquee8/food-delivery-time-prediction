@@ -5,3 +5,7 @@ scikit-learn
 seaborn
 joblib
 pytest
+fastapi
+uvicorn[standard]
+redis
+pydantic-settings
