@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { useDeliveryWebSocket } from '../hooks/useDeliveryWebSocket'
 import type { DeliveryMetric, MetricState, RestaurantSection } from '../types'
+import { useDeliveryConditions } from './useDeliveryConditions'
 import { useLocation } from './useLocation'
 import { DeliveryMetricsContext } from './delivery-metrics-context'
 
@@ -33,6 +34,7 @@ export function DeliveryMetricsProvider({
   sections,
 }: DeliveryMetricsProviderProps) {
   const { location } = useLocation()
+  const { weather, traffic, timeOfDay, vehicle } = useDeliveryConditions()
   const [metricsByRestaurant, setMetricsByRestaurant] = useState<
     Record<string, RestaurantMetrics>
   >({})
@@ -89,6 +91,7 @@ export function DeliveryMetricsProvider({
     if (!location || !isConnected) return
 
     const locationKey = `${location.lat}:${location.lng}`
+    const conditionsKey = `${weather}:${traffic}:${timeOfDay}:${vehicle}`
 
     if (locationKeyRef.current !== locationKey) {
       locationKeyRef.current = locationKey
@@ -102,7 +105,7 @@ export function DeliveryMetricsProvider({
 
     for (const restaurantId of restaurantIds) {
       for (const metric of ['distance', 'time'] as DeliveryMetric[]) {
-        const requestKey = `${locationKey}:${restaurantId}:${metric}`
+        const requestKey = `${locationKey}:${conditionsKey}:${restaurantId}:${metric}`
         if (requestedKeysRef.current.has(requestKey)) continue
 
         requestedKeysRef.current.add(requestKey)
@@ -125,6 +128,10 @@ export function DeliveryMetricsProvider({
           metric,
           lat: location.lat,
           lng: location.lng,
+          weather,
+          traffic,
+          timeOfDay,
+          vehicle,
         })
 
         if (!sent) {
@@ -142,7 +149,17 @@ export function DeliveryMetricsProvider({
         }
       }
     }
-  }, [location, restaurantIds, sendCalculate, isConnected, connectionVersion])
+  }, [
+    location,
+    restaurantIds,
+    sendCalculate,
+    isConnected,
+    connectionVersion,
+    weather,
+    traffic,
+    timeOfDay,
+    vehicle,
+  ])
 
   const getMetric = useCallback(
     (restaurantId: string, metric: DeliveryMetric): MetricState => {
