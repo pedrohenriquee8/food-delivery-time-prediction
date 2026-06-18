@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { DeliveryMetric } from '../types'
+import type {
+  TimeOfDay,
+  TrafficLevel,
+  VehicleType,
+  Weather,
+} from '../lib/delivery-conditions'
 
 export interface CalculatePayload {
   requestId: string
@@ -7,6 +13,10 @@ export interface CalculatePayload {
   metric: DeliveryMetric
   lat: number
   lng: number
+  weather: Weather
+  traffic: TrafficLevel
+  timeOfDay: TimeOfDay
+  vehicle: VehicleType
 }
 
 export interface DeliveryResultMessage {
