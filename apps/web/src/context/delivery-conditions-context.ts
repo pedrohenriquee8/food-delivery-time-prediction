@@ -1,5 +1,6 @@
 import { createContext } from 'react'
 import type {
+  ModelType,
   TimeOfDay,
   TrafficLevel,
   VehicleType,
@@ -11,10 +12,12 @@ export interface DeliveryConditionsContextValue {
   traffic: TrafficLevel
   timeOfDay: TimeOfDay
   vehicle: VehicleType
+  model: ModelType
   setWeather: (weather: Weather) => void
   setTraffic: (traffic: TrafficLevel) => void
   setTimeOfDay: (timeOfDay: TimeOfDay) => void
   setVehicle: (vehicle: VehicleType) => void
+  setModel: (model: ModelType) => void
 }
 
 export const DeliveryConditionsContext =

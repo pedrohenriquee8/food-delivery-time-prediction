@@ -27,6 +27,7 @@ class CalculateMessage(BaseModel):
     traffic: Literal["Low", "Medium", "High"]
     timeOfDay: Literal["Morning", "Afternoon", "Evening", "Night"]
     vehicle: Literal["Bike", "Scooter", "Car"]
+    model: Literal["linear", "random_forest", "gradient_boosting"] = "linear"
 
 
 class ConnectionManager:
