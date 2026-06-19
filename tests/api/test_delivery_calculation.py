@@ -6,7 +6,7 @@ USER_LNG = -36.6611
 
 def test_calculate_delivery_metrics_returns_formatted_strings():
     result = calculate_delivery_metrics(
-        restaurant_id="burger-house",
+        restaurant_id="baixao-burgers",
         lat=USER_LAT,
         lng=USER_LNG,
         weather="Clear",
@@ -22,7 +22,7 @@ def test_calculate_delivery_metrics_returns_formatted_strings():
 
 def test_calculate_delivery_metrics_is_deterministic():
     kwargs = {
-        "restaurant_id": "pizza-club",
+        "restaurant_id": "fernandes-pizza",
         "lat": USER_LAT,
         "lng": USER_LNG,
         "weather": "Rainy",
@@ -39,7 +39,7 @@ def test_calculate_delivery_metrics_is_deterministic():
 
 def test_calculate_delivery_metrics_varies_with_traffic():
     base_kwargs = {
-        "restaurant_id": "burger-house",
+        "restaurant_id": "baixao-burgers",
         "lat": USER_LAT,
         "lng": USER_LNG,
         "weather": "Clear",

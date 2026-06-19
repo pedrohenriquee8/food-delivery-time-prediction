@@ -15,10 +15,10 @@ CATEGORIES = [
     {"id": "sanduiches", "name": "Sanduíches", "icon": "🥪"},
 ]
 
-BURGER_HOUSE = {
-    "id": "burger-house",
-    "name": "Burger House",
-    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=225&fit=crop",
+BAIXAO_BURGERS = {
+    "id": "baixao-burgers",
+    "name": "Lanches do Baixão",
+    "imageUrl": "/images/restaurants/hamburger.jpg",
     "rating": 4.6,
     "reviewCount": "40 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 35",
@@ -30,10 +30,10 @@ BURGER_HOUSE = {
     "courierExperienceYrs": 2.0,
 }
 
-TACO_STATION = {
-    "id": "taco-station",
-    "name": "Taco Station",
-    "imageUrl": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=225&fit=crop",
+CANAFISTULA_TACOS = {
+    "id": "canafistula-tacos",
+    "name": "Tacos da Canafístula",
+    "imageUrl": "/images/restaurants/taco.jpg",
     "rating": 4.5,
     "reviewCount": "28 mil+",
     "deliveryFee": "Taxa de entrega R$ 4,99",
@@ -45,10 +45,10 @@ TACO_STATION = {
     "courierExperienceYrs": 1.5,
 }
 
-THE_MELTED = {
-    "id": "the-melted",
-    "name": "The Melted",
-    "imageUrl": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=225&fit=crop",
+BOM_SUCESSO_LANCHES = {
+    "id": "bom-sucesso-lanches",
+    "name": "Lanches Bom Sucesso",
+    "imageUrl": "/images/restaurants/sandwich.jpg",
     "rating": 4.7,
     "reviewCount": "15 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 40",
@@ -60,10 +60,10 @@ THE_MELTED = {
     "courierExperienceYrs": 2.0,
 }
 
-WING_SPOT = {
-    "id": "wing-spot",
-    "name": "Wing Spot",
-    "imageUrl": "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400&h=225&fit=crop",
+BRASILIA_FRANGO = {
+    "id": "brasilia-frango",
+    "name": "Frango da Brasília",
+    "imageUrl": "/images/restaurants/chicken-wings.jpg",
     "rating": 4.4,
     "reviewCount": "12 mil+",
     "deliveryFee": "Taxa de entrega R$ 6,99",
@@ -75,10 +75,10 @@ WING_SPOT = {
     "courierExperienceYrs": 1.5,
 }
 
-PIZZA_CLUB = {
-    "id": "pizza-club",
-    "name": "Pizza Club",
-    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=225&fit=crop",
+FERNANDES_PIZZA = {
+    "id": "fernandes-pizza",
+    "name": "Pizza Fernandes",
+    "imageUrl": "/images/restaurants/pizza.jpg",
     "rating": 4.8,
     "reviewCount": "55 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 45",
@@ -90,10 +90,10 @@ PIZZA_CLUB = {
     "courierExperienceYrs": 2.5,
 }
 
-CHICKEN_EXPRESS = {
-    "id": "chicken-express",
-    "name": "Chicken Express",
-    "imageUrl": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=225&fit=crop",
+CACIMBAS_EXPRESS = {
+    "id": "cacimbas-express",
+    "name": "Galinha Cacimbas",
+    "imageUrl": "/images/restaurants/fried-chicken.jpg",
     "rating": 4.3,
     "reviewCount": "32 mil+",
     "deliveryFee": "Taxa de entrega R$ 3,99",
@@ -105,10 +105,10 @@ CHICKEN_EXPRESS = {
     "courierExperienceYrs": 1.5,
 }
 
-FRESH_BOWL = {
-    "id": "fresh-bowl",
-    "name": "Fresh Bowl",
-    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=225&fit=crop",
+FEIRA_VERDE_BOWL = {
+    "id": "feira-verde-bowl",
+    "name": "Bowl da Feira do Verde",
+    "imageUrl": "/images/restaurants/bowl.jpg",
     "rating": 4.9,
     "reviewCount": "8 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 30",
@@ -120,10 +120,10 @@ FRESH_BOWL = {
     "courierExperienceYrs": 2.0,
 }
 
-COFFEE_CORNER = {
-    "id": "coffee-corner",
-    "name": "Coffee Corner",
-    "imageUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=225&fit=crop",
+CENTRO_CAFE = {
+    "id": "centro-cafe",
+    "name": "Café do Centro",
+    "imageUrl": "/images/restaurants/coffee.jpg",
     "rating": 4.6,
     "reviewCount": "22 mil+",
     "deliveryFee": "Taxa de entrega R$ 2,99",
@@ -135,10 +135,10 @@ COFFEE_CORNER = {
     "courierExperienceYrs": 1.5,
 }
 
-SUSHI_WAVE = {
-    "id": "sushi-wave",
-    "name": "Sushi Wave",
-    "imageUrl": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=225&fit=crop",
+PECANHA_SUSHI = {
+    "id": "pecanha-sushi",
+    "name": "Sushi Nilo Peçanha",
+    "imageUrl": "/images/restaurants/sushi.jpg",
     "rating": 4.7,
     "reviewCount": "18 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 60",
@@ -150,10 +150,10 @@ SUSHI_WAVE = {
     "courierExperienceYrs": 2.5,
 }
 
-PASTA_LAB = {
-    "id": "pasta-lab",
-    "name": "Pasta Lab",
-    "imageUrl": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=225&fit=crop",
+IMPERADOR_MASSAS = {
+    "id": "imperador-massas",
+    "name": "Massas do Imperador",
+    "imageUrl": "/images/restaurants/pasta.jpg",
     "rating": 4.5,
     "reviewCount": "9 mil+",
     "deliveryFee": "Taxa de entrega R$ 5,49",
@@ -165,10 +165,10 @@ PASTA_LAB = {
     "courierExperienceYrs": 2.0,
 }
 
-BBQ_NATION = {
-    "id": "bbq-nation",
-    "name": "BBQ Nation",
-    "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=225&fit=crop",
+MERCADO_GRILL = {
+    "id": "mercado-grill",
+    "name": "Churrascaria do Mercado",
+    "imageUrl": "/images/restaurants/bbq.jpg",
     "rating": 4.6,
     "reviewCount": "26 mil+",
     "deliveryFee": "Entrega grátis acima de R$ 55",
@@ -180,10 +180,10 @@ BBQ_NATION = {
     "courierExperienceYrs": 3.0,
 }
 
-SWEET_TREATS = {
-    "id": "sweet-treats",
-    "name": "Sweet Treats",
-    "imageUrl": "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=225&fit=crop",
+CALHEIROS_DOCES = {
+    "id": "calheiros-doces",
+    "name": "Doces Calheiros",
+    "imageUrl": "/images/restaurants/dessert.jpg",
     "rating": 4.8,
     "reviewCount": "11 mil+",
     "deliveryFee": "Taxa de entrega R$ 4,49",
@@ -196,18 +196,18 @@ SWEET_TREATS = {
 }
 
 ALL_RESTAURANTS = [
-    BURGER_HOUSE,
-    TACO_STATION,
-    THE_MELTED,
-    WING_SPOT,
-    PIZZA_CLUB,
-    CHICKEN_EXPRESS,
-    FRESH_BOWL,
-    COFFEE_CORNER,
-    SUSHI_WAVE,
-    PASTA_LAB,
-    BBQ_NATION,
-    SWEET_TREATS,
+    BAIXAO_BURGERS,
+    CANAFISTULA_TACOS,
+    BOM_SUCESSO_LANCHES,
+    BRASILIA_FRANGO,
+    FERNANDES_PIZZA,
+    CACIMBAS_EXPRESS,
+    FEIRA_VERDE_BOWL,
+    CENTRO_CAFE,
+    PECANHA_SUSHI,
+    IMPERADOR_MASSAS,
+    MERCADO_GRILL,
+    CALHEIROS_DOCES,
 ]
 
 RESTAURANTS_BY_ID = {restaurant["id"]: restaurant for restaurant in ALL_RESTAURANTS}
@@ -216,17 +216,17 @@ RESTAURANT_SECTIONS = [
     {
         "id": "low-delivery-fee",
         "title": "Entrega por menos de R$ 10",
-        "restaurants": [BURGER_HOUSE, TACO_STATION, CHICKEN_EXPRESS, COFFEE_CORNER],
+        "restaurants": [BAIXAO_BURGERS, CANAFISTULA_TACOS, CACIMBAS_EXPRESS, CENTRO_CAFE],
     },
     {
         "id": "national-favorites",
-        "title": "Favoritos nacionais",
-        "restaurants": [PIZZA_CLUB, THE_MELTED, WING_SPOT, BBQ_NATION],
+        "title": "Favoritos de Arapiraca",
+        "restaurants": [FERNANDES_PIZZA, BOM_SUCESSO_LANCHES, BRASILIA_FRANGO, MERCADO_GRILL],
     },
     {
         "id": "nearby-popular",
         "title": "Mais pedidos perto de você",
-        "restaurants": [FRESH_BOWL, SUSHI_WAVE, PASTA_LAB, SWEET_TREATS],
+        "restaurants": [FEIRA_VERDE_BOWL, PECANHA_SUSHI, IMPERADOR_MASSAS, CALHEIROS_DOCES],
     },
 ]
 
@@ -237,7 +237,7 @@ BANNERS = [
         "title": "40% de desconto no primeiro pedido",
         "code": "NOVO40",
         "ctaLabel": "Saiba mais",
-        "imageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=300&h=200&fit=crop",
+        "imageUrl": "/images/banners/grocery.jpg",
     },
     {
         "id": "subscription",
@@ -246,7 +246,7 @@ BANNERS = [
         "subtitle": "Ofertas exclusivas para membros",
         "ctaLabel": "Assinar",
         "badge": "FoodPass",
-        "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=200&fit=crop",
+        "imageUrl": "/images/banners/salad.jpg",
     },
 ]
 
