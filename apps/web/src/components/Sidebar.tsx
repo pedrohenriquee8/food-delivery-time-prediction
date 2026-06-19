@@ -5,7 +5,6 @@ import {
   Package,
   ShoppingBag,
   ShoppingBasket,
-  Sparkles,
   Store,
   Wine,
   Zap,
@@ -28,7 +27,6 @@ const mainNavItems: SidebarItem[] = [
   { id: 'events', label: 'Eventos', icon: Package },
   { id: 'late-night', label: 'Madrugada', icon: Moon },
   { id: 'quick-store', label: 'Loja rápida', icon: Zap },
-  { id: 'beauty', label: 'Beleza', icon: Sparkles },
 ]
 
 function NavLink({ item }: { item: SidebarItem }) {
