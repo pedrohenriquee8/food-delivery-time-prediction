@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import { useDeliveryWebSocket } from '../hooks/useDeliveryWebSocket'
+import { generateRequestId } from '../lib/id'
 import type { DeliveryMetric, MetricState, RestaurantSection } from '../types'
 import { useDeliveryConditions } from './useDeliveryConditions'
 import { useLocation } from './useLocation'
@@ -121,7 +122,7 @@ export function DeliveryMetricsProvider({
           }
         })
 
-        const requestId = crypto.randomUUID()
+        const requestId = generateRequestId()
         const sent = sendCalculate({
           requestId,
           restaurantId,
