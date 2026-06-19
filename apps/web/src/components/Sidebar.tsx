@@ -3,7 +3,6 @@ import {
   LayoutGrid,
   Moon,
   Package,
-  PawPrint,
   ShoppingBag,
   ShoppingBasket,
   Sparkles,
@@ -30,7 +29,6 @@ const mainNavItems: SidebarItem[] = [
   { id: 'late-night', label: 'Madrugada', icon: Moon },
   { id: 'quick-store', label: 'Loja rápida', icon: Zap },
   { id: 'beauty', label: 'Beleza', icon: Sparkles },
-  { id: 'pets', label: 'Pets', icon: PawPrint },
 ]
 
 function NavLink({ item }: { item: SidebarItem }) {
