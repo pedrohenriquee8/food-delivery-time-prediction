@@ -1,6 +1,7 @@
 services:
   redis:
     image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/redis:${IMAGE_TAG:-latest}
+    pull_policy: always
     restart: unless-stopped
     volumes:
       - redis_data:/data
@@ -12,6 +13,7 @@ services:
 
   api:
     image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/api:${IMAGE_TAG:-latest}
+    pull_policy: always
     command: uvicorn apps.api.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
     environment:
@@ -34,6 +36,7 @@ services:
 
   worker:
     image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/worker:${IMAGE_TAG:-latest}
+    pull_policy: always
     command: python -m apps.api.worker
     restart: unless-stopped
     environment:
@@ -44,6 +47,7 @@ services:
 
   web:
     image: ${GHCR_IMAGE_PREFIX:-ghcr.io/pedrohenriquee8/food-delivery-time-prediction}/web:${IMAGE_TAG:-latest}
+    pull_policy: always
     restart: unless-stopped
     ports:
       - "${WEB_PORT:-8080}:80"
