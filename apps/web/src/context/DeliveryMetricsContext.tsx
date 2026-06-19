@@ -35,12 +35,13 @@ export function DeliveryMetricsProvider({
   sections,
 }: DeliveryMetricsProviderProps) {
   const { location } = useLocation()
-  const { weather, traffic, timeOfDay, vehicle } = useDeliveryConditions()
+  const { weather, traffic, timeOfDay, vehicle, model } = useDeliveryConditions()
   const [metricsByRestaurant, setMetricsByRestaurant] = useState<
     Record<string, RestaurantMetrics>
   >({})
   const requestedKeysRef = useRef<Set<string>>(new Set())
   const locationKeyRef = useRef<string | null>(null)
+  const conditionsKeyRef = useRef<string | null>(null)
   const connectionVersionRef = useRef(0)
 
   const handleResult = useCallback(
@@ -92,10 +93,15 @@ export function DeliveryMetricsProvider({
     if (!location || !isConnected) return
 
     const locationKey = `${location.lat}:${location.lng}`
-    const conditionsKey = `${weather}:${traffic}:${timeOfDay}:${vehicle}`
+    const conditionsKey = `${weather}:${traffic}:${timeOfDay}:${vehicle}:${model}`
 
     if (locationKeyRef.current !== locationKey) {
       locationKeyRef.current = locationKey
+      requestedKeysRef.current.clear()
+    }
+
+    if (conditionsKeyRef.current !== conditionsKey) {
+      conditionsKeyRef.current = conditionsKey
       requestedKeysRef.current.clear()
     }
 
@@ -133,6 +139,7 @@ export function DeliveryMetricsProvider({
           traffic,
           timeOfDay,
           vehicle,
+          model,
         })
 
         if (!sent) {
@@ -160,6 +167,7 @@ export function DeliveryMetricsProvider({
     traffic,
     timeOfDay,
     vehicle,
+    model,
   ])
 
   const getMetric = useCallback(

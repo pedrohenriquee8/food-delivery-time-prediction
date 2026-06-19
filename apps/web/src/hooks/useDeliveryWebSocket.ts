@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { DeliveryMetric } from '../types'
 import type {
+  ModelType,
   TimeOfDay,
   TrafficLevel,
   VehicleType,
@@ -17,6 +18,7 @@ export interface CalculatePayload {
   traffic: TrafficLevel
   timeOfDay: TimeOfDay
   vehicle: VehicleType
+  model: ModelType
 }
 
 export interface DeliveryResultMessage {

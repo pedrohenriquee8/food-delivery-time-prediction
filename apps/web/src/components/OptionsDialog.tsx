@@ -6,6 +6,9 @@ import { fetchRestaurantSections } from '../lib/api'
 import { reverseGeocode } from '../lib/geocoding'
 import { getRestaurantColor } from '../lib/restaurantColors'
 import {
+  MODEL_ICONS,
+  MODEL_LABELS,
+  MODEL_VALUES,
   TIME_OF_DAY_ICONS,
   TIME_OF_DAY_LABELS,
   TIME_OF_DAY_VALUES,
@@ -18,6 +21,7 @@ import {
   WEATHER_ICONS,
   WEATHER_LABELS,
   WEATHER_VALUES,
+  type ModelType,
   type TimeOfDay,
   type TrafficLevel,
   type VehicleType,
@@ -32,6 +36,7 @@ interface DeliveryConditionsDraft {
   traffic: TrafficLevel
   timeOfDay: TimeOfDay
   vehicle: VehicleType
+  model: ModelType
 }
 
 interface OptionsDialogContentProps {
@@ -60,6 +65,7 @@ function OptionsDialogContent({
   const [traffic, setTraffic] = useState(initialConditions.traffic)
   const [timeOfDay, setTimeOfDay] = useState(initialConditions.timeOfDay)
   const [vehicle, setVehicle] = useState(initialConditions.vehicle)
+  const [model, setModel] = useState(initialConditions.model)
   const [isGeocoding, setIsGeocoding] = useState(false)
   const [draftLabel, setDraftLabel] = useState(initialLocation?.label ?? '')
   const [draftPosition, setDraftPosition] = useState(initialPosition)
@@ -103,7 +109,7 @@ function OptionsDialogContent({
 
   const handleConfirm = useCallback(() => {
     onConfirm(
-      { weather, traffic, timeOfDay, vehicle },
+      { weather, traffic, timeOfDay, vehicle, model },
       {
         lat: draftPosition.lat,
         lng: draftPosition.lng,
@@ -111,7 +117,7 @@ function OptionsDialogContent({
         source: 'manual',
       }
     )
-  }, [weather, traffic, timeOfDay, vehicle, draftPosition, draftLabel, onConfirm])
+  }, [weather, traffic, timeOfDay, vehicle, model, draftPosition, draftLabel, onConfirm])
 
   return (
     <div
@@ -181,6 +187,16 @@ function OptionsDialogContent({
                 value,
                 label: VEHICLE_LABELS[value],
                 icon: VEHICLE_ICONS[value],
+              }))}
+            />
+            <OptionGroup
+              label="Modelo de IA"
+              value={model}
+              onChange={setModel}
+              options={MODEL_VALUES.map((value) => ({
+                value,
+                label: MODEL_LABELS[value],
+                icon: MODEL_ICONS[value],
               }))}
             />
           </section>
@@ -268,10 +284,12 @@ export function OptionsDialog() {
     traffic,
     timeOfDay,
     vehicle,
+    model,
     setWeather,
     setTraffic,
     setTimeOfDay,
     setVehicle,
+    setModel,
   } = useDeliveryConditions()
   const {
     isDialogOpen,
@@ -321,6 +339,7 @@ export function OptionsDialog() {
       setTraffic(conditions.traffic)
       setTimeOfDay(conditions.timeOfDay)
       setVehicle(conditions.vehicle)
+      setModel(conditions.model)
       setLocation(nextLocation)
       closeDialog()
     },
@@ -329,6 +348,7 @@ export function OptionsDialog() {
       setTraffic,
       setTimeOfDay,
       setVehicle,
+      setModel,
       setLocation,
       closeDialog,
     ]
@@ -339,7 +359,7 @@ export function OptionsDialog() {
   return (
     <OptionsDialogContent
       key={dialogKey}
-      initialConditions={{ weather, traffic, timeOfDay, vehicle }}
+      initialConditions={{ weather, traffic, timeOfDay, vehicle, model }}
       initialLocation={location}
       defaultMapCenter={defaultMapCenter}
       restaurants={restaurants}

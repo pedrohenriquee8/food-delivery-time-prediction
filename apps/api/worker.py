@@ -32,6 +32,7 @@ def process_job(payload: dict, client: redis.Redis) -> None:
         traffic=payload["traffic"],
         time_of_day=payload["timeOfDay"],
         vehicle=payload["vehicle"],
+        model=payload.get("model", settings.default_model),
     )
     value = metrics[metric_response_key(metric)]
 
@@ -66,9 +67,10 @@ def run_worker() -> None:
                 _, raw_payload = result
                 payload = json.loads(raw_payload)
                 logger.info(
-                    "Processing job %s for %s",
+                    "Processing job %s | metric=%s model=%s",
                     payload.get("requestId"),
                     payload.get("metric"),
+                    payload.get("model", settings.default_model),
                 )
 
                 try:

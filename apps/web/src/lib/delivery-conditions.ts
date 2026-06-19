@@ -1,9 +1,11 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   Bike,
+  BrainCircuit,
   Car,
   CloudFog,
   CloudRain,
+  GitMerge,
   Moon,
   SignalHigh,
   SignalLow,
@@ -12,6 +14,7 @@ import {
   Sun,
   Sunrise,
   Sunset,
+  Trees,
   Wind,
   Zap,
 } from 'lucide-react'
@@ -20,6 +23,7 @@ export type Weather = 'Clear' | 'Rainy' | 'Foggy' | 'Windy' | 'Snowy'
 export type TrafficLevel = 'Low' | 'Medium' | 'High'
 export type TimeOfDay = 'Morning' | 'Afternoon' | 'Evening' | 'Night'
 export type VehicleType = 'Bike' | 'Scooter' | 'Car'
+export type ModelType = 'linear' | 'random_forest' | 'gradient_boosting'
 
 export const HEADER_PILL_CLASS =
   'flex h-11 shrink-0 items-center rounded-full outline-none transition-colors'
@@ -45,6 +49,8 @@ export const TIME_OF_DAY_VALUES: TimeOfDay[] = [
 ]
 
 export const VEHICLE_VALUES: VehicleType[] = ['Bike', 'Scooter', 'Car']
+
+export const MODEL_VALUES: ModelType[] = ['linear', 'random_forest', 'gradient_boosting']
 
 export function pickRandom<T>(values: readonly T[]): T {
   return values[Math.floor(Math.random() * values.length)]!
@@ -111,6 +117,18 @@ export const VEHICLE_ICONS: Record<VehicleType, LucideIcon> = {
   Bike,
   Scooter: Zap,
   Car,
+}
+
+export const MODEL_LABELS: Record<ModelType, string> = {
+  linear: 'Regressão Linear',
+  random_forest: 'Random Forest',
+  gradient_boosting: 'Gradient Boosting',
+}
+
+export const MODEL_ICONS: Record<ModelType, LucideIcon> = {
+  linear: BrainCircuit,
+  random_forest: Trees,
+  gradient_boosting: GitMerge,
 }
 
 export const WEATHER_STYLES: Record<Weather, string> = {
